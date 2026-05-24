@@ -76,25 +76,50 @@ pnpm run dev`;
 
 export default function Home() {
   return (
-    <main className="relative flex flex-col items-center text-center px-6 py-20 gap-8">
+    <main className="relative flex flex-col items-center text-center px-6 py-5 gap-8">
       {/* DEV PROFILE */}
-      <div className="absolute top-4 right-4 flex items-center gap-2">
-        <Image
-          src="https://avatars.githubusercontent.com/u/145298381?v=4"
-          alt="Foto do desenvolvedor"
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
-
-        <a
-          href={links[1].href}
-          target="_blank"
-          className="text-sm text-muted-foreground hover:underline"
+      <div className="flex w-full border-muted-foreground rounded-lg justify-between items-center">
+        <motion.div
+          animate={{
+            y: [0, -4, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
-          @joseisaacpy
-        </a>
-        <ThemeButton />
+          <ThemeButton />
+        </motion.div>
+        <div>
+          {/* link */}
+          <a
+            href={links[1].href}
+            target="_blank"
+            className="flex items-center gap-2"
+          >
+            {/* avatar */}
+            <motion.img
+              animate={{
+                y: [0, -4, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              src="https://avatars.githubusercontent.com/u/145298381?v=4"
+              alt="Foto do desenvolvedor"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            {/* username */}
+            <span className="text-sm text-muted-foreground hover:underline hidden md:block">
+              @joseisaacpy
+            </span>
+          </a>
+        </div>
       </div>
 
       {/* HERO */}
@@ -142,9 +167,14 @@ export default function Home() {
                 y: -4,
                 scale: 1.02,
               }}
+              whileTap={{
+                scale: 0.98,
+              }}
               transition={{
                 type: "spring",
                 stiffness: 300,
+                staggerChildren: 0.12,
+                delayChildren: 0.15,
               }}
               key={item.name}
               href={item.href}
