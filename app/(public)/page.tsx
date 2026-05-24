@@ -40,6 +40,10 @@ const stack = [
     href: "https://tailwindcss.com/docs",
   },
   {
+    name: "Motion",
+    href: "https://motion.dev/docs",
+  },
+  {
     name: "shadcn/ui",
     href: "https://ui.shadcn.com/docs",
   },
