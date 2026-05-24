@@ -1,6 +1,19 @@
+"use client";
+
 // componentes
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ThemeButton } from "@/components/theme/ThemeButton";
+
+// animation
+import { motion } from "motion/react";
+import {
+  fadeIn,
+  slideUp,
+  pageTransition,
+  scaleIn,
+  staggerContainer,
+} from "@/components/animations/index";
 
 // constantes
 const links = [
@@ -81,27 +94,42 @@ export default function Home() {
         >
           @joseisaacpy
         </a>
+        <ThemeButton />
       </div>
 
       {/* HERO */}
-      <section className="max-w-4xl">
-        <h1 className="text-4xl font-bold">Next.js Fullstack Starter</h1>
+      <motion.section
+        className="max-w-4xl"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.h1 variants={slideUp} className="text-4xl font-bold">
+          Next.js Fullstack Starter
+        </motion.h1>
 
-        <p className="text-lg text-muted-foreground">
+        <motion.p variants={fadeIn} className="text-lg text-muted-foreground">
           Template completo com autenticação, banco de dados e UI prontos.
           Comece projetos em minutos, não horas.
-        </p>
+        </motion.p>
 
         <div className="mt-4 flex flex-wrap justify-center gap-4">
           {links.map((link) => (
-            <Button key={link.name} asChild>
-              <a href={link.href} target="_blank">
-                {link.name}
-              </a>
-            </Button>
+            <motion.div
+              key={link.name}
+              variants={slideUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button asChild>
+                <a href={link.href} target="_blank">
+                  {link.name}
+                </a>
+              </Button>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* STACK */}
       <section className="mt-4 max-w-4xl w-full">
@@ -109,14 +137,22 @@ export default function Home() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           {stack.map((item) => (
-            <a
+            <motion.a
+              whileHover={{
+                y: -4,
+                scale: 1.02,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+              }}
               key={item.name}
               href={item.href}
               target="_blank"
               className="p-4 border rounded-lg hover:bg-muted transition"
             >
               {item.name}
-            </a>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -127,7 +163,9 @@ export default function Home() {
 
         <ul className="space-y-2 text-muted-foreground">
           {benefits.map((benefit) => (
-            <li key={benefit}>✔ {benefit}</li>
+            <motion.li key={benefit} variants={slideUp}>
+              ✔ {benefit}
+            </motion.li>
           ))}
         </ul>
       </section>
@@ -136,9 +174,15 @@ export default function Home() {
       <section className="mt-4 max-w-4xl w-full">
         <h2 className="text-2xl font-semibold mb-2">Comece em segundos</h2>
 
-        <pre className="p-4 rounded-lg border text-left text-sm overflow-x-scroll">
+        <motion.pre
+          variants={fadeIn}
+          whileHover={{
+            scale: 1.02,
+          }}
+          className="p-4 rounded-lg border text-left text-sm overflow-x-scroll"
+        >
           <code>{comand}</code>
-        </pre>
+        </motion.pre>
       </section>
     </main>
   );
