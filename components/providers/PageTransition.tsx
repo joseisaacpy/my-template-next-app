@@ -1,21 +1,23 @@
 "use client";
 
-import { motion } from "motion/react";
-
+import { AnimatePresence, motion } from "motion/react";
 import { pageTransition } from "@/components/animations/index";
-import { usePathname } from "next/dist/client/components/navigation";
+import { usePathname } from "next/navigation";
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <motion.div
-      variants={pageTransition}
-      key={pathname}
-      initial="hidden"
-      animate="visible"
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={pathname}
+        variants={pageTransition}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 }
