@@ -1,11 +1,8 @@
 "use client";
 
-// componentes
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ThemeButton } from "@/components/theme/ThemeButton";
-
-// animation
 import { motion } from "motion/react";
 import {
   fadeIn,
@@ -15,7 +12,11 @@ import {
   staggerContainer,
 } from "@/components/animations/index";
 
+const MotionImage = motion.create(Image);
+
 // constantes
+const MY_GITHUB_URL = "https://github.com/joseisaacpy";
+
 const links = [
   {
     name: "Ver código no Github",
@@ -23,7 +24,7 @@ const links = [
   },
   {
     name: "Meu Github",
-    href: "https://github.com/joseisaacpy",
+    href: MY_GITHUB_URL,
   },
   {
     name: "Meu portfólio",
@@ -69,7 +70,7 @@ const benefits = [
   "Estrutura escalável",
 ];
 
-const comand = `npx create-next-app -e https://github.com/joseisaacpy/my-template-next-app
+const command = `npx create-next-app -e https://github.com/joseisaacpy/my-template-next-app
 cd seu-projeto
 pnpm install
 pnpm run dev`;
@@ -92,29 +93,20 @@ export default function Home() {
           <ThemeButton />
         </motion.div>
         <div>
-          {/* link */}
           <a
-            href={links[1].href}
+            href={MY_GITHUB_URL}
             target="_blank"
             className="flex items-center gap-2"
           >
-            {/* avatar */}
-            <motion.img
-              animate={{
-                y: [0, -4, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+            <MotionImage
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               src="https://avatars.githubusercontent.com/u/145298381?v=4"
               alt="Foto do desenvolvedor"
               width={40}
               height={40}
               className="rounded-full"
             />
-            {/* username */}
             <span className="text-sm text-muted-foreground hover:underline hidden md:block">
               @joseisaacpy
             </span>
@@ -211,7 +203,7 @@ export default function Home() {
           }}
           className="p-4 rounded-lg border text-left text-sm overflow-x-scroll"
         >
-          <code>{comand}</code>
+          <code>{command}</code>
         </motion.pre>
       </section>
     </main>
