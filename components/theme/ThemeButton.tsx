@@ -7,6 +7,19 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function ThemeButton() {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const isDark = theme === "dark";
+
   const toggleTheme = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!document.startViewTransition) {
       setTheme(isDark ? "light" : "dark");
@@ -39,20 +52,6 @@ export function ThemeButton() {
       },
     );
   };
-
-  const [mounted, setMounted] = useState(false);
-
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
-  const isDark = theme === "dark";
 
   return (
     <Button variant="outline" size="icon" onClick={toggleTheme}>
