@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@prisma/client";
@@ -8,6 +8,31 @@ const prisma = new PrismaClient({
     connectionString: process.env.DATABASE_URL!,
   }),
 });
+
+/**
+ * Só registra um provedor social quando as credenciais existem no ambiente.
+ * Assim o template funciona sem OAuth configurado e cada provedor é opt-in
+ * por variável de ambiente.
+ */
+function buildSocialProviders(): BetterAuthOptions["socialProviders"] {
+  const providers: NonNullable<BetterAuthOptions["socialProviders"]> = {};
+
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    providers.google = {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    };
+  }
+
+  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+    providers.github = {
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    };
+  }
+
+  return providers;
+}
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -20,5 +45,5 @@ export const auth = betterAuth({
     autoSignIn: true,
     requireEmailVerification: true,
   },
-  socialProviders: {},
+  socialProviders: buildSocialProviders(),
 });
