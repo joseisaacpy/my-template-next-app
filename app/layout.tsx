@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { PageTransition } from "@/components/providers/PageTransition";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -24,14 +23,7 @@ export default function RootLayout({
       className={cn("font-sans", inter.variable)}
     >
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <PageTransition>{children}</PageTransition>
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
