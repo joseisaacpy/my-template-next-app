@@ -95,6 +95,27 @@ import { Header } from "@/components/layout";
 
 Para mudar o menu, edite as listas em `nav.config.ts` — não o componente.
 
+## Footer
+
+`components/layout/Footer.tsx` renderiza `nav.footer` (vazio por padrão) + o
+copyright. Já montado em `app/(private)/layout.tsx`. Para ligar links, adicione
+chaves em `nav.footer` no `nav.config.ts`.
+
+## Proteção de rotas
+
+`proxy.ts` faz checagem **otimista** (só presença do cookie de sessão) e
+redireciona rotas privadas para `/login?redirect=<path>`. A lista
+`PRIVATE_PREFIXES` deve espelhar as rotas `auth: true` do `nav.config.ts`.
+
+A validação real da sessão (cookie válido, usuário existe) deve ser feita no
+layout / server action da área privada — o proxy não acessa o banco.
+
+## Variáveis de ambiente
+
+`env.ts` (raiz) valida `process.env` com zod na inicialização. Módulos server
+importam `import { env } from "@/env"`. Faltando variável obrigatória, o app
+não sobe. Em CI sem segredos: `SKIP_ENV_VALIDATION=1`.
+
 ## Imagem OG
 
 `site.ogImage` em `nav.config.ts` começa `undefined`. Ao adicionar

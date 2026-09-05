@@ -24,11 +24,10 @@ export const site = {
   description:
     "Template Next.js fullstack com autenticação, banco e UI prontos.",
   /** URL pública, sem barra no final. */
-  url: (
-    process.env.NEXT_PUBLIC_APP_URL ??
-    process.env.NEXT_PUBLIC_BASE_URL ??
-    "http://localhost:3000"
-  ).replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000").replace(
+    /\/$/,
+    "",
+  ),
   locale: "pt-BR",
   /**
    * Imagem OG padrão em `/public` (ex.: `"/og.png"`).

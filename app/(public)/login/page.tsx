@@ -5,7 +5,19 @@ import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({ route: "login" });
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirect?: string }>;
+}) {
+  const { redirect } = await searchParams;
+
+  // `?redirect=` vem do proxy.ts. Só aceita caminho interno (evita open redirect).
+  const callbackURL =
+    redirect?.startsWith("/") && !redirect.startsWith("//")
+      ? redirect
+      : undefined;
+
   return (
     <AuthCard
       title="Entrar"
@@ -22,7 +34,7 @@ export default function LoginPage() {
         </>
       }
     >
-      <LoginForm />
+      <LoginForm callbackURL={callbackURL} />
     </AuthCard>
   );
 }

@@ -3,9 +3,11 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@prisma/client";
 
+import { env } from "@/env";
+
 const prisma = new PrismaClient({
   adapter: new PrismaNeon({
-    connectionString: process.env.DATABASE_URL!,
+    connectionString: env.DATABASE_URL,
   }),
 });
 
@@ -17,17 +19,17 @@ const prisma = new PrismaClient({
 function buildSocialProviders(): BetterAuthOptions["socialProviders"] {
   const providers: NonNullable<BetterAuthOptions["socialProviders"]> = {};
 
-  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
     providers.google = {
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     };
   }
 
-  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) {
     providers.github = {
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
     };
   }
 
@@ -38,8 +40,8 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL!,
-  secret: process.env.BETTER_AUTH_SECRET,
+  baseURL: env.NEXT_PUBLIC_BASE_URL,
+  secret: env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
