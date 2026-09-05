@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { AuthCard, RegisterForm } from "@/features/auth";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({ route: "register" });
 
 export default function RegisterPage() {
   return (

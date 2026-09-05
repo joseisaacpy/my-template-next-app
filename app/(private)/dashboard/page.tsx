@@ -1,4 +1,8 @@
-export default function page() {
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({ route: "dashboard" });
+
+export default function DashboardPage() {
   return (
     <div>
       <h1>Private Page</h1>

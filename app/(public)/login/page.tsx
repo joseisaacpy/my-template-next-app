@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { AuthCard, LoginForm } from "@/features/auth";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({ route: "login" });
 
 export default function LoginPage() {
   return (

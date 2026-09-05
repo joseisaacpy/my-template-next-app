@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { AuthCard, ForgotPasswordForm } from "@/features/auth";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({ route: "forgotPassword" });
 
 export default function ForgotPasswordPage() {
   return (
