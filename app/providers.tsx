@@ -4,6 +4,7 @@ import * as React from "react";
 import { ProgressProvider } from "@bprogress/next/app";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { PageTransition } from "@/components/providers/PageTransition";
+import { Toaster } from "@/components/ui/sonner";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         shallowRouting
       >
         <PageTransition>{children}</PageTransition>
+        <Toaster />
       </ProgressProvider>
     </ThemeProvider>
   );

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ThemeButton } from "@/components/theme/ThemeButton";
 import { motion } from "motion/react";
+import { toast } from "sonner";
 import {
   fadeIn,
   slideUp,
@@ -13,7 +14,6 @@ import {
 const MotionImage = motion.create(Image);
 
 // constantes
-const MY_GITHUB_URL = "https://github.com/joseisaacpy";
 
 const links = [
   {
@@ -22,11 +22,11 @@ const links = [
   },
   {
     name: "Meu Github",
-    href: MY_GITHUB_URL,
+    href: "https://github.com/joseisaacpy",
   },
   {
     name: "Meu portfólio",
-    href: "https://developer-portfolio-v3.vercel.app/",
+    href: "https://joseisaacdev.vercel.app/",
   },
 ];
 
@@ -92,7 +92,7 @@ export function HomeView() {
         </motion.div>
         <div>
           <a
-            href={MY_GITHUB_URL}
+            href={links[1].href}
             target="_blank"
             className="flex items-center gap-2"
           >
@@ -119,7 +119,11 @@ export function HomeView() {
         initial="hidden"
         animate="visible"
       >
-        <motion.h1 variants={slideUp} className="text-4xl font-bold">
+        <motion.h1
+          variants={slideUp}
+          className="text-4xl font-bold"
+          onClick={() => toast.success("Quem que clica em um título? 🤔")}
+        >
           Next.js Fullstack Starter
         </motion.h1>
 

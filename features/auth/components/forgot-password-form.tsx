@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/ui/form-error";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { authClient } from "@/lib/auth/auth-client";
 
 import {
@@ -67,13 +68,16 @@ export function ForgotPasswordForm({
         {...register("email")}
       />
 
-      {formError ? (
-        <p className="text-sm text-destructive">{formError}</p>
-      ) : null}
+      <FormError>{formError}</FormError>
 
-      <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Enviando..." : "Enviar link de recuperação"}
-      </Button>
+      <SubmitButton
+        size="lg"
+        className="w-full"
+        loading={isSubmitting}
+        loadingText="Enviando..."
+      >
+        Enviar link de recuperação
+      </SubmitButton>
     </form>
   );
 }

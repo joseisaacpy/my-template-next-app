@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/ui/form-error";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { authClient } from "@/lib/auth/auth-client";
 
 import { registerSchema, type RegisterInput } from "../schemas/auth.schema";
@@ -85,13 +86,16 @@ export function RegisterForm({ callbackURL = "/dashboard" }: RegisterFormProps) 
         {...register("confirmPassword")}
       />
 
-      {formError ? (
-        <p className="text-sm text-destructive">{formError}</p>
-      ) : null}
+      <FormError>{formError}</FormError>
 
-      <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Criando conta..." : "Criar conta"}
-      </Button>
+      <SubmitButton
+        size="lg"
+        className="w-full"
+        loading={isSubmitting}
+        loadingText="Criando conta..."
+      >
+        Criar conta
+      </SubmitButton>
     </form>
   );
 }
