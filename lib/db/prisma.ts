@@ -1,8 +1,14 @@
 import { PrismaNeon } from "@prisma/adapter-neon";
-import { PrismaClient } from "@prisma/client";
 
 import { env } from "@/env";
+import { PrismaClient } from "@/lib/generated/prisma/client";
 
+/**
+ * Client Prisma único do app (better-auth incluso — ver `lib/auth/auth.ts`).
+ *
+ * O singleton em `globalThis` evita abrir um pool novo do Neon a cada
+ * hot-reload do `next dev`. Em produção cada instância tem o seu.
+ */
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };

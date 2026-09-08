@@ -1,15 +1,8 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { PrismaClient } from "@prisma/client";
 
 import { env } from "@/env";
-
-const prisma = new PrismaClient({
-  adapter: new PrismaNeon({
-    connectionString: env.DATABASE_URL,
-  }),
-});
+import { prisma } from "@/lib/db/prisma";
 
 /**
  * Só registra um provedor social quando as credenciais existem no ambiente.
