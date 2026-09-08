@@ -20,7 +20,9 @@ export default function GlobalError({
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ textAlign: "center", padding: "2rem", maxWidth: "28rem" }}>
+        <div
+          style={{ textAlign: "center", padding: "2rem", maxWidth: "28rem" }}
+        >
           <h1 style={{ fontSize: "1.5rem" }}>Algo deu errado</h1>
           <p style={{ color: "#71717a" }}>
             A aplicação encontrou um erro inesperado.

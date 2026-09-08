@@ -92,11 +92,14 @@ export function LoginForm({
     <div className="space-y-6">
       {socialProviders.length > 0 ? (
         <>
-          <SocialAuthButtons providers={socialProviders} callbackURL={callbackURL} />
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
+          <SocialAuthButtons
+            providers={socialProviders}
+            callbackURL={callbackURL}
+          />
+          <div className="text-muted-foreground flex items-center gap-3 text-xs">
+            <span className="bg-border h-px flex-1" />
             ou
-            <span className="h-px flex-1 bg-border" />
+            <span className="bg-border h-px flex-1" />
           </div>
         </>
       ) : null}
@@ -121,7 +124,7 @@ export function LoginForm({
             </label>
             <Link
               href="/forgot-password"
-              className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+              className="text-muted-foreground text-sm underline-offset-4 hover:underline"
             >
               Esqueci minha senha
             </Link>

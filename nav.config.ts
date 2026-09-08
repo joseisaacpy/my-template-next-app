@@ -48,13 +48,7 @@ export const site = {
 
 /** Frequência de mudança declarada no `sitemap.xml`. */
 export type ChangeFrequency =
-  | "always"
-  | "hourly"
-  | "daily"
-  | "weekly"
-  | "monthly"
-  | "yearly"
-  | "never";
+  "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
 
 export type RouteKey =
   | "home"

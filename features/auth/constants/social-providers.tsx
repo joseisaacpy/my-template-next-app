@@ -62,11 +62,23 @@ function GitlabIcon(props: IconProps) {
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
       <path fill="#E24329" d="m12 21.42 3.68-11.33H8.32L12 21.42Z" />
       <path fill="#FC6D26" d="M12 21.42 8.32 10.09H3.16L12 21.42Z" />
-      <path fill="#FCA326" d="M3.16 10.09 2.04 13.53a.76.76 0 0 0 .28.85L12 21.42 3.16 10.09Z" />
-      <path fill="#E24329" d="M3.16 10.09h5.16L6.1 3.26a.38.38 0 0 0-.72 0l-2.22 6.83Z" />
+      <path
+        fill="#FCA326"
+        d="M3.16 10.09 2.04 13.53a.76.76 0 0 0 .28.85L12 21.42 3.16 10.09Z"
+      />
+      <path
+        fill="#E24329"
+        d="M3.16 10.09h5.16L6.1 3.26a.38.38 0 0 0-.72 0l-2.22 6.83Z"
+      />
       <path fill="#FC6D26" d="m12 21.42 3.68-11.33h5.16L12 21.42Z" />
-      <path fill="#FCA326" d="m20.84 10.09 1.12 3.44a.76.76 0 0 1-.28.85L12 21.42l8.84-11.33Z" />
-      <path fill="#E24329" d="M20.84 10.09h-5.16l2.22-6.83a.38.38 0 0 1 .72 0l2.22 6.83Z" />
+      <path
+        fill="#FCA326"
+        d="m20.84 10.09 1.12 3.44a.76.76 0 0 1-.28.85L12 21.42l8.84-11.33Z"
+      />
+      <path
+        fill="#E24329"
+        d="M20.84 10.09h-5.16l2.22-6.83a.38.38 0 0 1 .72 0l2.22 6.83Z"
+      />
     </svg>
   );
 }
@@ -106,15 +118,19 @@ function FacebookIcon(props: IconProps) {
   );
 }
 
-export const SOCIAL_PROVIDERS: Record<SocialProviderId, SocialProviderConfig> = {
-  google: { id: "google", label: "Google", icon: <GoogleIcon /> },
-  github: { id: "github", label: "GitHub", icon: <GithubIcon />, mono: true },
-  gitlab: { id: "gitlab", label: "GitLab", icon: <GitlabIcon /> },
-  discord: { id: "discord", label: "Discord", icon: <DiscordIcon /> },
-  microsoft: { id: "microsoft", label: "Microsoft", icon: <MicrosoftIcon /> },
-  apple: { id: "apple", label: "Apple", icon: <AppleIcon />, mono: true },
-  facebook: { id: "facebook", label: "Facebook", icon: <FacebookIcon /> },
-};
+export const SOCIAL_PROVIDERS: Record<SocialProviderId, SocialProviderConfig> =
+  {
+    google: { id: "google", label: "Google", icon: <GoogleIcon /> },
+    github: { id: "github", label: "GitHub", icon: <GithubIcon />, mono: true },
+    gitlab: { id: "gitlab", label: "GitLab", icon: <GitlabIcon /> },
+    discord: { id: "discord", label: "Discord", icon: <DiscordIcon /> },
+    microsoft: { id: "microsoft", label: "Microsoft", icon: <MicrosoftIcon /> },
+    apple: { id: "apple", label: "Apple", icon: <AppleIcon />, mono: true },
+    facebook: { id: "facebook", label: "Facebook", icon: <FacebookIcon /> },
+  };
 
 /** Provedores que aparecem por padrão quando nenhum é informado. */
-export const DEFAULT_SOCIAL_PROVIDERS: SocialProviderId[] = ["google", "github"];
+export const DEFAULT_SOCIAL_PROVIDERS: SocialProviderId[] = [
+  "google",
+  "github",
+];

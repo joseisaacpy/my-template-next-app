@@ -75,9 +75,9 @@ pnpm run dev`;
 
 export function HomeView() {
   return (
-    <main className="relative flex flex-col items-center text-center px-6 py-5 gap-8">
+    <main className="relative flex flex-col items-center gap-8 px-6 py-5 text-center">
       {/* DEV PROFILE */}
-      <div className="flex w-full border-muted-foreground rounded-lg justify-between items-center">
+      <div className="border-muted-foreground flex w-full items-center justify-between rounded-lg">
         <motion.div
           animate={{
             y: [0, -4, 0],
@@ -105,7 +105,7 @@ export function HomeView() {
               height={40}
               className="rounded-full"
             />
-            <span className="text-sm text-muted-foreground hover:underline hidden md:block">
+            <span className="text-muted-foreground hidden text-sm hover:underline md:block">
               @joseisaacpy
             </span>
           </a>
@@ -127,7 +127,7 @@ export function HomeView() {
           Next.js Fullstack Starter
         </motion.h1>
 
-        <motion.p variants={fadeIn} className="text-lg text-muted-foreground">
+        <motion.p variants={fadeIn} className="text-muted-foreground text-lg">
           Template completo com autenticação, banco de dados e UI prontos.
           Comece projetos em minutos, não horas.
         </motion.p>
@@ -151,10 +151,10 @@ export function HomeView() {
       </motion.section>
 
       {/* STACK */}
-      <section className="mt-4 max-w-4xl w-full">
-        <h2 className="text-2xl font-semibold mb-2">Stack</h2>
+      <section className="mt-4 w-full max-w-4xl">
+        <h2 className="mb-2 text-2xl font-semibold">Stack</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
           {stack.map((item) => (
             <motion.a
               whileHover={{
@@ -173,7 +173,7 @@ export function HomeView() {
               key={item.name}
               href={item.href}
               target="_blank"
-              className="p-4 border rounded-lg hover:bg-muted transition"
+              className="hover:bg-muted rounded-lg border p-4 transition"
             >
               {item.name}
             </motion.a>
@@ -183,9 +183,9 @@ export function HomeView() {
 
       {/* BENEFÍCIOS */}
       <section className="mt-4 max-w-4xl">
-        <h2 className="text-2xl font-semibold mb-2">Por que usar?</h2>
+        <h2 className="mb-2 text-2xl font-semibold">Por que usar?</h2>
 
-        <ul className="space-y-2 text-muted-foreground">
+        <ul className="text-muted-foreground space-y-2">
           {benefits.map((benefit) => (
             <motion.li key={benefit} variants={slideUp}>
               ✔ {benefit}
@@ -195,15 +195,15 @@ export function HomeView() {
       </section>
 
       {/* GET STARTED */}
-      <section className="mt-4 max-w-4xl w-full">
-        <h2 className="text-2xl font-semibold mb-2">Comece em segundos</h2>
+      <section className="mt-4 w-full max-w-4xl">
+        <h2 className="mb-2 text-2xl font-semibold">Comece em segundos</h2>
 
         <motion.pre
           variants={fadeIn}
           whileHover={{
             scale: 1.02,
           }}
-          className="p-4 rounded-lg border text-left text-sm overflow-x-scroll"
+          className="overflow-x-scroll rounded-lg border p-4 text-left text-sm"
         >
           <code>{command}</code>
         </motion.pre>

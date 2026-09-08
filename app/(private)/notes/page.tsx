@@ -14,8 +14,8 @@ export default async function NotesPage() {
       <div className="space-y-1">
         <h1 className="text-2xl font-semibold">Notas</h1>
         <p className="text-muted-foreground">
-          Fatia vertical completa (schema → repository → service → action →
-          UI). Copie <code>features/example</code> como molde.
+          Fatia vertical completa (schema → repository → service → action → UI).
+          Copie <code>features/example</code> como molde.
         </p>
       </div>
 

@@ -14,8 +14,10 @@ import {
 
 type ButtonProps = React.ComponentProps<typeof Button>;
 
-export interface SocialAuthButtonProps
-  extends Omit<ButtonProps, "children" | "onClick"> {
+export interface SocialAuthButtonProps extends Omit<
+  ButtonProps,
+  "children" | "onClick"
+> {
   /** Provedor social (google, github, gitlab, discord, microsoft, apple, facebook). */
   provider: SocialProviderId;
   /** Para onde redirecionar após o login. Padrão: `/dashboard`. */

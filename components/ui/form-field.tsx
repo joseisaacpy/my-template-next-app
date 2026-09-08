@@ -16,7 +16,9 @@ type FormFieldContextValue = {
   hasError: boolean;
 };
 
-const FormFieldContext = React.createContext<FormFieldContextValue | null>(null);
+const FormFieldContext = React.createContext<FormFieldContextValue | null>(
+  null,
+);
 
 /**
  * Acessa os ids e o estado de erro do `<FormField>` mais próximo.
@@ -55,8 +57,10 @@ function FormControl(props: React.ComponentProps<typeof Slot.Root>) {
   );
 }
 
-interface FormFieldProps
-  extends Omit<React.ComponentProps<"div">, "children" | "id"> {
+interface FormFieldProps extends Omit<
+  React.ComponentProps<"div">,
+  "children" | "id"
+> {
   label?: React.ReactNode;
   /** Conteúdo à direita do label, ex.: link "Esqueci a senha". */
   labelAction?: React.ReactNode;
@@ -138,13 +142,13 @@ function FormField({
         )}
 
         {description ? (
-          <p id={descriptionId} className="text-sm text-muted-foreground">
+          <p id={descriptionId} className="text-muted-foreground text-sm">
             {description}
           </p>
         ) : null}
 
         {hasError ? (
-          <p id={errorId} role="alert" className="text-sm text-destructive">
+          <p id={errorId} role="alert" className="text-destructive text-sm">
             {error}
           </p>
         ) : null}

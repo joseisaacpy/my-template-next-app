@@ -31,7 +31,9 @@ export function NoteRowActions({ note }: { note: Note }) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Editar nota</DialogTitle>
-            <DialogDescription>Altere o título ou o conteúdo.</DialogDescription>
+            <DialogDescription>
+              Altere o título ou o conteúdo.
+            </DialogDescription>
           </DialogHeader>
           <NoteForm note={note} onSaved={() => setEditing(false)} />
         </DialogContent>

@@ -27,11 +27,11 @@ export function NoteList({ notes }: { notes: Note[] }) {
           <TableRow key={note.id}>
             <TableCell>
               <p className="font-medium">{note.title}</p>
-              <p className="line-clamp-1 text-sm text-muted-foreground">
+              <p className="text-muted-foreground line-clamp-1 text-sm">
                 {note.content}
               </p>
             </TableCell>
-            <TableCell className="hidden text-sm text-muted-foreground sm:table-cell">
+            <TableCell className="text-muted-foreground hidden text-sm sm:table-cell">
               {formatNoteDate(note.createdAt)}
             </TableCell>
             <TableCell className="text-right">

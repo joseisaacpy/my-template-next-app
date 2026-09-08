@@ -7,10 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { createNoteAction } from "../actions/create-note";
 import { updateNoteAction } from "../actions/update-note";
-import {
-  NOTE_CONTENT_MAX,
-  NOTE_TITLE_MAX,
-} from "../constants/note.constants";
+import { NOTE_CONTENT_MAX, NOTE_TITLE_MAX } from "../constants/note.constants";
 import { useNoteForm } from "../hooks/use-note-form";
 import type { Note } from "../types/note.types";
 

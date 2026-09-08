@@ -3,7 +3,10 @@ import Link from "next/link";
 import { AuthCard, ResetPasswordForm } from "@/features/auth";
 import { createMetadata } from "@/lib/metadata";
 
-export const metadata = createMetadata({ route: "resetPassword", noIndex: true });
+export const metadata = createMetadata({
+  route: "resetPassword",
+  noIndex: true,
+});
 
 export default async function ResetPasswordPage({
   searchParams,
@@ -22,13 +25,13 @@ export default async function ResetPasswordPage({
         footer={
           <Link
             href="/forgot-password"
-            className="font-medium text-foreground underline-offset-4 hover:underline"
+            className="text-foreground font-medium underline-offset-4 hover:underline"
           >
             Pedir um novo link
           </Link>
         }
       >
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-center text-sm">
           Solicite um novo e-mail de recuperação para continuar.
         </p>
       </AuthCard>
@@ -42,7 +45,7 @@ export default async function ResetPasswordPage({
       footer={
         <Link
           href="/login"
-          className="font-medium text-foreground underline-offset-4 hover:underline"
+          className="text-foreground font-medium underline-offset-4 hover:underline"
         >
           Voltar para o login
         </Link>

@@ -22,6 +22,7 @@
 ## Fluxos
 
 ### Cadastro + verificação
+
 1. `/register` → `authClient.signUp.email({ ..., callbackURL })`.
 2. Form **não** redireciona: mostra "confirme seu e-mail" + botão reenviar.
 3. Link do e-mail → `GET /api/auth/verify-email?token=...&callbackURL=...`
@@ -29,6 +30,7 @@
    `autoSignInAfterVerification`, o usuário cai logado no `callbackURL`.
 
 ### Reset de senha
+
 1. `/forgot-password` → `authClient.requestPasswordReset({ email, redirectTo: "/reset-password" })`.
 2. Link do e-mail → `GET /api/auth/reset-password/:token` → redireciona para
    `/reset-password?token=...` (válido) ou `?error=INVALID_TOKEN` (expirado).
@@ -36,11 +38,13 @@
 4. Form → `authClient.resetPassword({ newPassword, token })` → `/login`.
 
 ### Login
+
 `login-form` ramifica a mensagem por `error.code`: `EMAIL_NOT_VERIFIED`
 (oferece reenvio), `INVALID_EMAIL_OR_PASSWORD` ("e-mail ou senha inválidos"),
 status `429` ("muitas tentativas"). Cópia neutra, não revela qual campo falhou.
 
 ### Logout
+
 `features/auth` → `<LogoutButton />` no `Header`: `authClient.signOut()` →
 `router.push("/login")` + `router.refresh()`.
 

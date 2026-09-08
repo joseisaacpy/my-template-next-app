@@ -13,7 +13,9 @@ import { PrismaClient } from "../lib/generated/prisma/client";
 const connectionString = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 
 if (!connectionString) {
-  throw new Error("Defina DATABASE_URL (ou DIRECT_URL) no .env antes de semear.");
+  throw new Error(
+    "Defina DATABASE_URL (ou DIRECT_URL) no .env antes de semear.",
+  );
 }
 
 const prisma = new PrismaClient({

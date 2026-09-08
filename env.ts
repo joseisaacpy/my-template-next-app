@@ -43,7 +43,9 @@ function parseEnv(): z.infer<typeof envSchema> {
 
   if (!parsed.success) {
     const issues = parsed.error.issues
-      .map((issue) => `  • ${issue.path.join(".") || "(raiz)"}: ${issue.message}`)
+      .map(
+        (issue) => `  • ${issue.path.join(".") || "(raiz)"}: ${issue.message}`,
+      )
       .join("\n");
 
     throw new Error(

@@ -50,7 +50,7 @@ export function ForgotPasswordForm({
 
   if (sent) {
     return (
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground text-center text-sm">
         Se existir uma conta com esse e-mail, enviamos um link para redefinir a
         senha.
       </p>

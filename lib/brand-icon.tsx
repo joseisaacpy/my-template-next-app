@@ -19,26 +19,24 @@ const initial = site.name.trim().charAt(0).toUpperCase() || "A";
 
 export function renderBrandIcon(size: number, radiusRatio = 0.22) {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: Math.round(size * 0.62),
-          fontWeight: 700,
-          fontFamily: "sans-serif",
-          // Ajuste para as cores da sua marca.
-          color: "#fafafa",
-          background: "#0a0a0a",
-          borderRadius: Math.round(size * radiusRatio),
-        }}
-      >
-        {initial}
-      </div>
-    ),
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: Math.round(size * 0.62),
+        fontWeight: 700,
+        fontFamily: "sans-serif",
+        // Ajuste para as cores da sua marca.
+        color: "#fafafa",
+        background: "#0a0a0a",
+        borderRadius: Math.round(size * radiusRatio),
+      }}
+    >
+      {initial}
+    </div>,
     { width: size, height: size },
   );
 }

@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+lib/generated
+.next
+.react-email
+prisma/migrations
+coverage
+AGENTS.md
+CLAUDE.md

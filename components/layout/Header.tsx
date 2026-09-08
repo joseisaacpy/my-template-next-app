@@ -37,7 +37,7 @@ export function Header({ user, authenticated, className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur",
+        "bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur",
         className,
       )}
     >
@@ -64,7 +64,7 @@ export function Header({ user, authenticated, className }: HeaderProps) {
           {user ? (
             <>
               <span
-                className="flex size-7 items-center justify-center rounded-full bg-muted text-xs font-medium"
+                className="bg-muted flex size-7 items-center justify-center rounded-full text-xs font-medium"
                 title={user.name ?? user.email}
                 aria-hidden
               >

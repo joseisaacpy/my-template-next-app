@@ -73,7 +73,7 @@ export function RegisterForm({
   if (sentTo) {
     return (
       <div className="space-y-4 text-center">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Enviamos um link de confirmação para <strong>{sentTo}</strong>. Abra o
           e-mail para ativar sua conta.
         </p>
@@ -94,11 +94,14 @@ export function RegisterForm({
     <div className="space-y-6">
       {socialProviders.length > 0 ? (
         <>
-          <SocialAuthButtons providers={socialProviders} callbackURL={callbackURL} />
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
+          <SocialAuthButtons
+            providers={socialProviders}
+            callbackURL={callbackURL}
+          />
+          <div className="text-muted-foreground flex items-center gap-3 text-xs">
+            <span className="bg-border h-px flex-1" />
             ou
-            <span className="h-px flex-1 bg-border" />
+            <span className="bg-border h-px flex-1" />
           </div>
         </>
       ) : null}

@@ -28,8 +28,8 @@ export function NavLink({ href, children, exact, className }: NavLinkProps) {
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "text-sm text-muted-foreground transition-colors hover:text-foreground",
-        active && "font-medium text-foreground",
+        "text-muted-foreground hover:text-foreground text-sm transition-colors",
+        active && "text-foreground font-medium",
         className,
       )}
     >

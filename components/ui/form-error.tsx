@@ -9,14 +9,18 @@ import { cn } from "@/lib/utils";
  * @example
  * <FormError>{formError}</FormError>
  */
-function FormError({ className, children, ...props }: React.ComponentProps<"p">) {
+function FormError({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"p">) {
   if (!children) return null;
 
   return (
     <p
       role="alert"
       data-slot="form-error"
-      className={cn("text-sm text-destructive", className)}
+      className={cn("text-destructive text-sm", className)}
       {...props}
     >
       {children}

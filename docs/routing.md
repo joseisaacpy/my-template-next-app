@@ -13,7 +13,7 @@ lugar: `nav.config.ts` (raiz do projeto). Esse arquivo alimenta:
    - adicione a entrada em `routes` com `path`, `label` (o nome) e `description`.
 
    ```ts
-   export type RouteKey = /* ... */ | "settings";
+   export type RouteKey = /* ... */ "settings";
 
    export const routes: Record<RouteKey, RouteMeta> = {
      // ...
@@ -48,14 +48,14 @@ lugar: `nav.config.ts` (raiz do projeto). Esse arquivo alimenta:
 
 ## `createMetadata()`
 
-| Campo         | Efeito                                                              |
-| ------------- | ----------------------------------------------------------------- |
-| `route`       | Puxa `title` e `description` do registro em `nav.config.ts`.       |
-| `title`       | Sobrescreve o título.                                              |
-| `description` | Sobrescreve a descrição.                                           |
-| `path`        | Canônico. Default: `routes[route].path`.                           |
-| `noIndex`     | `true` remove a página dos buscadores.                             |
-| `overrides`   | Mescla qualquer campo extra do objeto `Metadata` do Next.          |
+| Campo         | Efeito                                                       |
+| ------------- | ------------------------------------------------------------ |
+| `route`       | Puxa `title` e `description` do registro em `nav.config.ts`. |
+| `title`       | Sobrescreve o título.                                        |
+| `description` | Sobrescreve a descrição.                                     |
+| `path`        | Canônico. Default: `routes[route].path`.                     |
+| `noIndex`     | `true` remove a página dos buscadores.                       |
+| `overrides`   | Mescla qualquer campo extra do objeto `Metadata` do Next.    |
 
 O sufixo `%s · Meu Template` no `<title>` vem do template definido em
 `app/layout.tsx` (`rootMetadata`).
@@ -128,15 +128,15 @@ não sobe. Em CI sem segredos: `SKIP_ENV_VALIDATION=1`.
 
 ## Rotas atuais
 
-| Rota                | Área      | Observação                                  |
-| ------------------- | --------- | ------------------------------------------- |
-| `/`                 | pública   | home                                        |
-| `/login`            | pública   | redireciona logado para `/dashboard`        |
-| `/register`         | pública   | idem                                        |
-| `/forgot-password`  | pública   | fora do sitemap                             |
-| `/reset-password`   | pública   | `noIndex`, fora do sitemap, só com `?token` |
-| `/dashboard`        | privada   | `requireUser()`                             |
-| `/notes`            | privada   | CRUD de referência, `requireUser()`         |
+| Rota               | Área    | Observação                                  |
+| ------------------ | ------- | ------------------------------------------- |
+| `/`                | pública | home                                        |
+| `/login`           | pública | redireciona logado para `/dashboard`        |
+| `/register`        | pública | idem                                        |
+| `/forgot-password` | pública | fora do sitemap                             |
+| `/reset-password`  | pública | `noIndex`, fora do sitemap, só com `?token` |
+| `/dashboard`       | privada | `requireUser()`                             |
+| `/notes`           | privada | CRUD de referência, `requireUser()`         |
 
 ## Imagem OG
 

@@ -11,8 +11,10 @@ import {
   type SocialAuthButtonProps,
 } from "./social-auth-button";
 
-export interface SocialAuthButtonsProps
-  extends Omit<SocialAuthButtonProps, "provider" | "label"> {
+export interface SocialAuthButtonsProps extends Omit<
+  SocialAuthButtonProps,
+  "provider" | "label"
+> {
   /** Lista de provedores a renderizar. Padrão: `DEFAULT_SOCIAL_PROVIDERS`. */
   providers?: SocialProviderId[];
 }

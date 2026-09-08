@@ -1,6 +1,7 @@
 # Constitution
 
 ## Stack
+
 - Next.js App Router
 - TypeScript
 - Tailwind
@@ -8,6 +9,7 @@
 - Prisma
 
 ## Regras
+
 - Server Components por padrão
 - Server Actions antes de API routes
 - Actions retornam `ActionResult` (`lib/actions`); nunca `throw` para erro
@@ -22,11 +24,13 @@
 - Evitar lógica em `page.tsx`
 
 ## Estrutura
+
 - features por domínio
 - camadas: repository → service → action → component
 - schemas, types, constants, utils separados
 
 ## UI
+
 - shadcn/ui
 - acessibilidade mínima
 - loading states

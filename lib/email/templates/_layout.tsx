@@ -64,8 +64,18 @@ export function EmailLayout({
 }
 
 export const emailStyles = {
-  heading: { fontSize: 20, fontWeight: 600, color: "#0a0a0a", margin: "0 0 12px" },
-  text: { fontSize: 14, lineHeight: "22px", color: "#3f3f46", margin: "0 0 16px" },
+  heading: {
+    fontSize: 20,
+    fontWeight: 600,
+    color: "#0a0a0a",
+    margin: "0 0 12px",
+  },
+  text: {
+    fontSize: 14,
+    lineHeight: "22px",
+    color: "#3f3f46",
+    margin: "0 0 16px",
+  },
   button: {
     backgroundColor: "#0a0a0a",
     borderRadius: 8,

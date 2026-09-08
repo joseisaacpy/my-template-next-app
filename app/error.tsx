@@ -19,7 +19,7 @@ export default function Error({
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 className="text-2xl font-semibold tracking-tight">Algo deu errado</h1>
-      <p className="max-w-sm text-sm text-muted-foreground">
+      <p className="text-muted-foreground max-w-sm text-sm">
         {error.digest
           ? `Ocorreu um erro inesperado. Referência: ${error.digest}`
           : "Ocorreu um erro inesperado. Tente novamente em instantes."}
