@@ -25,16 +25,9 @@ const envSchema = z.object({
   GITHUB_CLIENT_ID: z.string().optional(),
   GITHUB_CLIENT_SECRET: z.string().optional(),
 
-  // E-mail (Brevo / SMTP)
-  BREVO_SMTP_HOST: z.string().optional(),
-  BREVO_SMTP_PORT: z.coerce.number().optional(),
-  BREVO_SMTP_USER: z.string().optional(),
-  BREVO_SMTP_PASS: z.string().optional(),
-  BREVO_SENDER_NAME: z.string().optional(),
-  BREVO_SENDER_EMAIL: z.email().optional(),
-
-  // Cron jobs
-  CRON_SECRET: z.string().optional(),
+  // E-mail — sem RESEND_API_KEY o envio cai no transporte "console" (dev).
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().default("Meu Template <onboarding@resend.dev>"),
 
   NODE_ENV: z
     .enum(["development", "test", "production"])
