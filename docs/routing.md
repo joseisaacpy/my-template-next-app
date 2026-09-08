@@ -41,7 +41,10 @@ lugar: `nav.config.ts` (raiz do projeto). Esse arquivo alimenta:
 
 3. **(Opcional) Mostrar no menu**: inclua a chave em `nav.header` (ou `nav.footer`)
    dentro de `nav.config.ts`. Itens com `auth: true` só aparecem quando o
-   `<Header />` recebe `authenticated`.
+   `<Header />` recebe um `user`.
+
+4. **Rota privada?** Adicione o prefixo em `PRIVATE_PREFIXES` no `proxy.ts` e
+   valide a sessão na page com `requireUser()` (`lib/auth/session.ts`).
 
 ## `createMetadata()`
 
@@ -88,9 +91,11 @@ export async function generateMetadata({
 
 ```tsx
 import { Header } from "@/components/layout";
+import { requireSession } from "@/lib/auth/session";
 
 // dentro de um layout Server Component
-<Header authenticated={hasSession} />;
+const { user } = await requireSession();
+<Header user={user} />;
 ```
 
 Para mudar o menu, edite as listas em `nav.config.ts` — não o componente.
@@ -103,18 +108,35 @@ chaves em `nav.footer` no `nav.config.ts`.
 
 ## Proteção de rotas
 
-`proxy.ts` faz checagem **otimista** (só presença do cookie de sessão) e
-redireciona rotas privadas para `/login?redirect=<path>`. A lista
-`PRIVATE_PREFIXES` deve espelhar as rotas `auth: true` do `nav.config.ts`.
+`proxy.ts` faz checagem **otimista** (só presença do cookie de sessão):
 
-A validação real da sessão (cookie válido, usuário existe) deve ser feita no
-layout / server action da área privada — o proxy não acessa o banco.
+- rotas privadas sem cookie → `/login?redirect=<path>`;
+- `/login` ou `/register` com cookie → `/dashboard`.
+
+`PRIVATE_PREFIXES` (hoje `["/dashboard", "/notes"]`) deve espelhar as rotas
+`auth: true` do `nav.config.ts`.
+
+A validação real da sessão (cookie válido, usuário existe) é feita no layout e
+em cada page/action da área privada via `requireUser()` — o proxy não acessa o
+banco.
 
 ## Variáveis de ambiente
 
 `env.ts` (raiz) valida `process.env` com zod na inicialização. Módulos server
 importam `import { env } from "@/env"`. Faltando variável obrigatória, o app
 não sobe. Em CI sem segredos: `SKIP_ENV_VALIDATION=1`.
+
+## Rotas atuais
+
+| Rota                | Área      | Observação                                  |
+| ------------------- | --------- | ------------------------------------------- |
+| `/`                 | pública   | home                                        |
+| `/login`            | pública   | redireciona logado para `/dashboard`        |
+| `/register`         | pública   | idem                                        |
+| `/forgot-password`  | pública   | fora do sitemap                             |
+| `/reset-password`   | pública   | `noIndex`, fora do sitemap, só com `?token` |
+| `/dashboard`        | privada   | `requireUser()`                             |
+| `/notes`            | privada   | CRUD de referência, `requireUser()`         |
 
 ## Imagem OG
 
