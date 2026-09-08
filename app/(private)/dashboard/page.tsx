@@ -1,12 +1,17 @@
 import { createMetadata } from "@/lib/metadata";
+import { requireUser } from "@/lib/auth/session";
 
 export const metadata = createMetadata({ route: "dashboard" });
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const user = await requireUser();
+
   return (
-    <div>
-      <h1>Private Page</h1>
-      <p>This page is only accessible to authenticated users.</p>
+    <div className="space-y-2">
+      <h1 className="text-2xl font-semibold">Olá, {user.name || user.email}</h1>
+      <p className="text-muted-foreground">
+        Esta página só é acessível com sessão ativa.
+      </p>
     </div>
   );
 }
