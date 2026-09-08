@@ -2,22 +2,16 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useMounted } from "@/lib/hooks/use-mounted";
 
 export function ThemeButton() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const { theme, setTheme } = useTheme();
 
-  // Guard de hidratação do next-themes: no servidor não há tema resolvido, então
-  // o botão só renderiza depois de montar no cliente. O set-state no efeito é o
-  // padrão documentado — refatorar para useSyncExternalStore fica para depois.
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- ver comentário acima
-    setMounted(true);
-  }, []);
-
+  // Guard de hidratação: no servidor não há tema resolvido, então o botão só
+  // aparece depois de montar no cliente.
   if (!mounted) {
     return null;
   }
