@@ -1,0 +1,27 @@
+# Git hooks (lefthook). Instalados no `pnpm install` via script `prepare`.
+# Pular pontualmente: LEFTHOOK=0 git commit ...
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{ts,tsx,mts,mjs,js,jsx,json,css,md}"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+    lint:
+      glob: "*.{ts,tsx,mts,mjs,js,jsx}"
+      run: pnpm exec eslint --fix --no-warn-ignored {staged_files}
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  commands:
+    typecheck:
+      run: pnpm typecheck
+    test:
+      run: pnpm test
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}
