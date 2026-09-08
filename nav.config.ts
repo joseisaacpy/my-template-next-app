@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { HomeIcon, LayoutDashboardIcon } from "lucide-react";
+import { HomeIcon, LayoutDashboardIcon, NotebookIcon } from "lucide-react";
 
 /**
  * Configuração central de navegação e identidade do site.
@@ -62,7 +62,8 @@ export type RouteKey =
   | "register"
   | "forgotPassword"
   | "resetPassword"
-  | "dashboard";
+  | "dashboard"
+  | "notes";
 
 export interface RouteMeta {
   /** Caminho real da rota. */
@@ -125,6 +126,13 @@ export const routes: Record<RouteKey, RouteMeta> = {
     auth: true,
     icon: LayoutDashboardIcon,
   },
+  notes: {
+    path: "/notes",
+    label: "Notas",
+    description: "Suas notas — CRUD de referência do template.",
+    auth: true,
+    icon: NotebookIcon,
+  },
 };
 
 export interface NavLinkItem extends RouteMeta {
@@ -143,7 +151,7 @@ function items(keys: RouteKey[]): NavLinkItem[] {
  * Itens com `auth: true` só aparecem quando `authenticated` é passado ao `<Header />`.
  */
 export const nav = {
-  header: items(["home", "dashboard"]),
+  header: items(["home", "dashboard", "notes"]),
   footer: items([]),
 } as const;
 

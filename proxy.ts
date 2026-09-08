@@ -10,7 +10,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * Mantenha estas listas em sincronia com as rotas de `nav.config.ts`. Não
  * importamos o config aqui para não inflar o bundle do Proxy.
  */
-const PRIVATE_PREFIXES = ["/dashboard"];
+const PRIVATE_PREFIXES = ["/dashboard", "/notes"];
 const AUTH_ROUTES = ["/login", "/register"];
 
 export function proxy(request: NextRequest) {
