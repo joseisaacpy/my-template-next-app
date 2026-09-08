@@ -44,6 +44,20 @@ export const site = {
    * Deixe `undefined` enquanto não houver arquivo — evita link quebrado.
    */
   ogImage: undefined as string | undefined,
+  /** URL do repositório — usada na home e nos comandos de instalação. */
+  repoUrl: "https://github.com/joseisaacpy/my-template-next-app",
+  /**
+   * Autor exibido na home (`app/(public)/_components/home-view.tsx`).
+   * Troque pelos seus dados. Se mudar o host do `avatar`, ajuste
+   * `images.remotePatterns` em `next.config.ts`.
+   */
+  author: {
+    name: "José Isaac",
+    handle: "joseisaacpy",
+    url: "https://github.com/joseisaacpy",
+    avatar: "https://avatars.githubusercontent.com/u/145298381?v=4",
+    portfolio: "https://joseisaacdev.vercel.app",
+  },
 } as const;
 
 /** Frequência de mudança declarada no `sitemap.xml`. */
