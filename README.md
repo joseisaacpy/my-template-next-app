@@ -212,7 +212,9 @@ pnpm start
 │
 ├── docs                # arquitetura, decisões, roadmap
 ├── prisma              # schema.prisma + migrations + seed.ts
-├── nav.config.ts       # navegação central
+├── .github/workflows   # CI (format, typecheck, lint, test, build)
+├── lefthook.yml        # git hooks (pre-commit, pre-push, commit-msg)
+├── nav.config.ts       # navegação + identidade do site
 └── env.ts              # validação de variáveis de ambiente (Zod)
 ```
 
@@ -321,6 +323,8 @@ pnpm build          # build de produção
 pnpm start          # servir o build
 pnpm lint           # ESLint
 pnpm typecheck      # tsc --noEmit
+pnpm test           # Vitest (test:watch para o modo watch)
+pnpm format         # Prettier --write (format:check só verifica)
 
 pnpm db:deploy      # aplica migrações (produção / setup)
 pnpm db:migrate     # cria e aplica uma migração nova (dev)
@@ -341,9 +345,9 @@ pnpm email:dev      # preview dos templates de e-mail (porta 3001)
 - [x] Login social (Google, GitHub)
 - [x] Logout + sessão no servidor
 - [x] CRUD de referência (Notas) + camada de server actions tipada
-- [ ] `LICENSE` (MIT — arquivo pendente)
-- [ ] Testes (Vitest) e CI/CD (GitHub Actions)
-- [ ] Prettier + git hooks
+- [x] Testes (Vitest) + CI (GitHub Actions)
+- [x] Prettier + git hooks (lefthook) + commitlint
+- [x] Security headers + imagem OG
 - [ ] Role Based Access Control (RBAC)
 - [ ] Upload de Arquivos
 - [ ] Stripe Integration

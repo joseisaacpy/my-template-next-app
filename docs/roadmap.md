@@ -9,19 +9,24 @@
 - camada de server actions tipada (`lib/actions` + `lib/errors`)
 - CRUD de referência (Notas) em `features/example`
 
-## Próximo (T2 — higiene)
+## Feito (T2 — higiene)
 
-- `LICENSE` (README diz MIT, falta o arquivo)
-- CI (GitHub Actions: install → typecheck → lint → build)
-- testes (Vitest): schemas, `createAction`, `note.service`, `sitemapRoutes`
-- Prettier + `eslint-config-prettier` + `prettier-plugin-tailwindcss`
-- git hooks (lefthook/husky + lint-staged + commitlint)
-- `packageManager` + `engines` + `.nvmrc`
-- security headers no `next.config.ts`; `opengraph-image.tsx`
-- ponto de plugue de observabilidade no `error.tsx` / `global-error.tsx`
-- parametrizar dados pessoais de `app/(public)/_components/home-view.tsx`
-  (hoje tem `github.com/joseisaacpy`, avatar e URL hardcoded) via `nav.config.ts`
-- refatorar `ThemeButton` para `useSyncExternalStore` (tira o eslint-disable)
+- `LICENSE` MIT, `packageManager`, `engines`, `.nvmrc`, `.editorconfig`
+- Prettier + `prettier-plugin-tailwindcss` + `eslint-config-prettier`
+- git hooks (lefthook) + commitlint (Conventional Commits)
+- Vitest — schemas, `toActionError`, `sitemapRoutes`, `noteService`
+- CI (GitHub Actions: format → typecheck → lint → test → build)
+- security headers no `next.config.ts` + `app/opengraph-image.tsx`
+- `lib/observability/captureError()` nos error boundaries
+- `home-view.tsx` sem dados pessoais hardcoded (`site.author` / `site.repoUrl`)
+- `ThemeButton` com `useSyncExternalStore` (`useMounted`)
+
+## T3 — não bloqueia, quando fizer sentido
+
+- `Content-Security-Policy` com nonce (middleware)
+- provedor de observabilidade real (Sentry) em `captureError`
+- Docker
+- `.github/` templates de issue/PR + Dependabot
 
 ## Features
 
