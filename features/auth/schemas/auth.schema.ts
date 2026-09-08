@@ -2,12 +2,14 @@ import { z } from "zod";
 
 /**
  * Regra de senha do projeto (ver `docs/features/auth.md`):
- * mínimo 8 caracteres, ao menos uma letra maiúscula e um caractere especial.
+ * mínimo 8 caracteres, com maiúscula, minúscula, dígito e caractere especial.
  */
 export const passwordSchema = z
   .string()
   .min(8, "Mínimo de 8 caracteres")
   .regex(/[A-Z]/, "Precisa de ao menos uma letra maiúscula")
+  .regex(/[a-z]/, "Precisa de ao menos uma letra minúscula")
+  .regex(/[0-9]/, "Precisa de ao menos um dígito")
   .regex(/[^A-Za-z0-9]/, "Precisa de ao menos um caractere especial");
 
 export const emailSchema = z.email("E-mail inválido");
