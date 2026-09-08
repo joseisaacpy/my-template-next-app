@@ -3,6 +3,7 @@ export { AuthField } from "./components/auth-field";
 export { LoginForm } from "./components/login-form";
 export { RegisterForm } from "./components/register-form";
 export { ForgotPasswordForm } from "./components/forgot-password-form";
+export { ResetPasswordForm } from "./components/reset-password-form";
 export { LogoutButton } from "./components/logout-button";
 export { SocialAuthButton } from "./components/social-auth-button";
 export type { SocialAuthButtonProps } from "./components/social-auth-button";
@@ -20,6 +21,7 @@ export {
   loginSchema,
   registerSchema,
   forgotPasswordSchema,
+  resetPasswordSchema,
   passwordSchema,
   emailSchema,
 } from "./schemas/auth.schema";
@@ -27,4 +29,5 @@ export type {
   LoginInput,
   RegisterInput,
   ForgotPasswordInput,
+  ResetPasswordInput,
 } from "./schemas/auth.schema";

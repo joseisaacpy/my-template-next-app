@@ -61,6 +61,7 @@ export type RouteKey =
   | "login"
   | "register"
   | "forgotPassword"
+  | "resetPassword"
   | "dashboard";
 
 export interface RouteMeta {
@@ -108,6 +109,13 @@ export const routes: Record<RouteKey, RouteMeta> = {
     label: "Recuperar senha",
     description: "Enviaremos um link para redefinir sua senha.",
     // Página de fluxo, sem valor de busca — fora do sitemap.
+    sitemap: false,
+  },
+  resetPassword: {
+    path: "/reset-password",
+    label: "Redefinir senha",
+    description: "Escolha uma nova senha para sua conta.",
+    // Acessada só via link com token — fora do sitemap.
     sitemap: false,
   },
   dashboard: {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { AuthCard, LoginForm } from "@/features/auth";
+import { enabledSocialProviders } from "@/lib/auth/social-providers";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({ route: "login" });
@@ -34,7 +35,10 @@ export default async function LoginPage({
         </>
       }
     >
-      <LoginForm callbackURL={callbackURL} />
+      <LoginForm
+        callbackURL={callbackURL}
+        socialProviders={enabledSocialProviders()}
+      />
     </AuthCard>
   );
 }
