@@ -13,9 +13,9 @@ describe("noteInputSchema", () => {
   });
 
   it("rejeita título vazio", () => {
-    expect(noteInputSchema.safeParse({ title: "  ", content: "x" }).success).toBe(
-      false,
-    );
+    expect(
+      noteInputSchema.safeParse({ title: "  ", content: "x" }).success,
+    ).toBe(false);
   });
 
   it("rejeita título acima do limite", () => {
