@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
+import { captureError } from "@/lib/observability/capture-error";
 
 export default function Error({
   error,
@@ -12,8 +13,7 @@ export default function Error({
   unstable_retry: () => void;
 }) {
   useEffect(() => {
-    // Substitua por um serviço de log (Sentry, etc.)
-    console.error(error);
+    captureError(error, { source: "error-boundary", digest: error.digest });
   }, [error]);
 
   return (

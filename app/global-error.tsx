@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+
+import { captureError } from "@/lib/observability/capture-error";
+
 // Captura erros do root layout. Precisa incluir <html> e <body> próprios
 // porque substitui o layout raiz. Mantido sem dependências de UI de propósito.
 export default function GlobalError({
@@ -9,6 +13,13 @@ export default function GlobalError({
   error: Error & { digest?: string };
   unstable_retry: () => void;
 }) {
+  useEffect(() => {
+    captureError(error, {
+      source: "global-error-boundary",
+      digest: error.digest,
+    });
+  }, [error]);
+
   return (
     <html lang="pt-BR">
       <body
