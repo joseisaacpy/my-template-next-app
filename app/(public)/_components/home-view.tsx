@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useProgress } from "@bprogress/next";
+import { CheckIcon, CopyIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -44,6 +47,26 @@ pnpm install
 pnpm dev`;
 
 export function HomeView() {
+  const progress = useProgress();
+  const [copied, setCopied] = useState(false);
+
+  function teste() {
+    toast.success("Quem que clica em um título? 🤔");
+  }
+
+  async function copyCommand() {
+    try {
+      progress.start();
+      await navigator.clipboard.writeText(command);
+      setCopied(true);
+      toast.success("Comando copiado!");
+      setTimeout(() => progress.stop(), 400);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Não foi possível copiar o comando.");
+    }
+  }
+
   return (
     <main className="relative flex flex-col items-center gap-8 px-6 py-5 text-center">
       {/* DEV PROFILE */}
@@ -86,7 +109,7 @@ export function HomeView() {
         <motion.h1
           variants={slideUp}
           className="text-4xl font-bold"
-          onClick={() => toast.success("Quem que clica em um título? 🤔")}
+          onClick={teste}
         >
           Next.js Fullstack Starter
         </motion.h1>
@@ -157,13 +180,26 @@ export function HomeView() {
       <section className="mt-4 w-full max-w-4xl">
         <h2 className="mb-2 text-2xl font-semibold">Comece em segundos</h2>
 
-        <motion.pre
-          variants={fadeIn}
-          whileHover={{ scale: 1.02 }}
-          className="overflow-x-auto rounded-lg border p-4 text-left text-sm"
-        >
-          <code>{command}</code>
-        </motion.pre>
+        <div className="relative">
+          <motion.pre
+            variants={fadeIn}
+            whileHover={{ scale: 1.02 }}
+            className="overflow-x-auto rounded-lg border p-4 pr-14 text-left text-sm"
+          >
+            <code>{command}</code>
+          </motion.pre>
+
+          <Button
+            type="button"
+            size="icon-sm"
+            variant="outline"
+            onClick={copyCommand}
+            aria-label="Copiar comando"
+            className="absolute top-2 right-2"
+          >
+            {copied ? <CheckIcon /> : <CopyIcon />}
+          </Button>
+        </div>
       </section>
     </main>
   );
