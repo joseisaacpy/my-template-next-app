@@ -106,6 +106,13 @@ export function HomeView() {
         initial="hidden"
         animate="visible"
       >
+        <motion.span
+          variants={slideUp}
+          className="text-muted-foreground mb-3 inline-block rounded-full border px-3 py-1 text-xs"
+        >
+          Usado em 5+ projetos reais
+        </motion.span>
+
         <motion.h1
           variants={slideUp}
           className="text-4xl font-bold"
