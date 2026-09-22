@@ -5,6 +5,7 @@ import { LogoutButton } from "@/features/auth";
 import { cn } from "@/lib/utils";
 import { nav, site } from "@/nav.config";
 
+import { MobileNav } from "./MobileNav";
 import { NavLink } from "./NavLink";
 
 interface HeaderUser {
@@ -47,7 +48,7 @@ export function Header({ user, authenticated, className }: HeaderProps) {
             {site.name}
           </Link>
 
-          <nav className="flex items-center gap-4">
+          <nav className="hidden items-center gap-4 md:flex">
             {links.map((item) => (
               <NavLink
                 key={item.key}
@@ -61,6 +62,8 @@ export function Header({ user, authenticated, className }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2">
+          <MobileNav links={links} siteName={site.name} />
+
           {user ? (
             <>
               <span
