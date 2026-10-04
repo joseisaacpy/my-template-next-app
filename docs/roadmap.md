@@ -16,24 +16,38 @@
 - git hooks (lefthook) + commitlint (Conventional Commits)
 - Vitest — schemas, `toActionError`, `sitemapRoutes`, `noteService`
 - CI (GitHub Actions: format → typecheck → lint → test → build)
-- security headers no `next.config.ts` + `app/opengraph-image.tsx`
+- security headers (hoje em `lib/security/headers.ts`) + `app/opengraph-image.tsx`
 - `lib/observability/captureError()` nos error boundaries
 - `home-view.tsx` sem dados pessoais hardcoded (`site.author` / `site.repoUrl`)
 - `ThemeButton` com `useSyncExternalStore` (`useMounted`)
 
-## Feito (P0)
+## Feito (P0 — prioridade alta)
 
-- `Content-Security-Policy` estática + headers em `lib/security/headers.ts`
+- `Content-Security-Policy` estática (`lib/security/headers.ts`)
 - RBAC: plugin `admin` (user/admin), `requireRole`, `createAction({ roles })`, `/admin/users`
+- docs de arquitetura: índice, fluxo de request, how-to de feature, testes, ADRs
+- `robots.txt` bloqueia `/admin` inteiro
+
+## P0 — pendente
+
+- testes de integração
+
+## P1
+
+- Docker (Next.js + PostgreSQL)
+- logger
+- melhorar a DX do clone
+
+## P2
+
+- observability (provedor real, como Sentry, em `captureError`)
 
 ## T3 — não bloqueia, quando fizer sentido
 
-- CSP com nonce (opcional — hoje é estática, ver `docs/decisions.md`)
-- provedor de observabilidade real (Sentry) em `captureError`
-- Docker
+- CSP com nonce (opcional — hoje é estática, ver [decisions.md](decisions.md))
 - `.github/` templates de issue/PR + Dependabot
 
-## Features
+## Features (backlog)
 
 - onboarding
 - billing / Stripe

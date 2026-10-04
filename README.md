@@ -1,320 +1,73 @@
 # 🚀 Next.js Fullstack SaaS Template
 
-Um template moderno e opinativo para construir aplicações SaaS com **Next.js**, utilizando uma arquitetura **Feature-Based**, autenticação pronta para produção e banco de dados configurado.
+Template moderno e opinativo para construir aplicações SaaS com **Next.js**:
+arquitetura **feature-based**, autenticação com papéis (RBAC) e banco já
+configurados.
 
 Desenvolva funcionalidades, não setup.
 
 ---
 
-## ✨ O que este template resolve?
-
-Configurar um projeto fullstack moderno normalmente exige:
-
-- Next.js
-- TypeScript
-- Prisma
-- PostgreSQL
-- Autenticação
-- UI Components
-- Estrutura escalável
-
-Esse template entrega tudo isso pronto para que você possa iniciar o desenvolvimento imediatamente.
-
----
-
 ## 🛠️ Stack
 
-- ⚡ Next.js 16 (App Router + Turbopack)
-- 🔷 TypeScript
-- 🗄️ Prisma ORM 7 (adapter Neon)
-- 🐘 PostgreSQL (Neon)
-- 🔐 Better Auth (email/senha + Google + GitHub)
-- 🎨 Tailwind CSS 4
-- 🧩 shadcn/ui (estilo `radix-nova`)
-- 📋 React Hook Form + Zod
-- 🔔 Sonner (toasts)
-- 🎞️ Motion + BProgress (transições e barra de progresso)
-- ✉️ Resend + React Email (fallback: imprime o e-mail no terminal em dev)
-- 🧪 Validação de env com Zod (`env.ts`)
-- 📏 ESLint
+- ⚡ Next.js 16 (App Router + Turbopack) · TypeScript
+- 🗄️ Prisma ORM 7 + PostgreSQL (Neon)
+- 🔐 Better Auth (e-mail/senha, Google, GitHub, papéis `user`/`admin`)
+- 🎨 Tailwind CSS 4 · shadcn/ui · Sonner · Motion
+- 📋 React Hook Form + Zod (validação de formulários e de `env.ts`)
+- ✉️ Resend + React Email (sem chave, imprime o e-mail no terminal)
+- 🧪 Vitest · 📏 ESLint + Prettier · 🪝 lefthook + commitlint · CI no GitHub Actions
+
+## ✨ O que já vem pronto
+
+- Login, cadastro com verificação de e-mail, recuperação de senha e login social (opt-in)
+- Sessão validada no servidor, rotas privadas e área `/admin/users` por papel
+- CRUD de referência (Notas) mostrando todas as camadas de uma feature
+- Server actions tipadas (`createAction`) com validação Zod e tratamento de erro
+- Headers de segurança + CSP, sitemap, robots, manifest e imagem OG
+- Dark mode, estados de loading/erro/vazio
 
 ---
 
-## ✨ Recursos Inclusos
-
-### Autenticação
-
-- Login com email e senha
-- Login social com Google e GitHub (opt-in por env — some quando não configurado)
-- Recuperação de senha (e-mail com token → `/reset-password`)
-- Verificação de email obrigatória + auto-login ao confirmar
-- Logout + sessão validada no servidor (`lib/auth/session.ts`)
-- Rate limit por IP na tabela `rateLimit`
-- Rotas privadas protegidas (`app/(private)`)
-
-### Banco de Dados
-
-- Prisma 7 (generator `prisma-client`, adapter Neon)
-- PostgreSQL (Neon)
-- Cliente Prisma único (better-auth incluso)
-- Models do better-auth + `Note` (exemplo) + `RateLimit`
-- Migração inicial versionada (`prisma/migrations/`)
-- Seed pronto (`pnpm db:seed`)
-
-### Interface
-
-- Tailwind CSS 4 configurado
-- shadcn/ui configurado
-- Dark Mode
-- Barra de progresso e transições de página
-- Componentes reutilizáveis + helpers de formulário
-
-### Arquitetura
-
-- Feature-Based Architecture
-- Separação entre domínio e infraestrutura
-- Navegação (`nav.config.ts`) e metadata (`lib/metadata.ts`) centralizadas
-- Estrutura preparada para projetos SaaS
-
----
-
-## 📦 Instalação
-
-Crie um novo projeto utilizando este template:
+## 📦 Começando
 
 ```bash
 npx create-next-app@latest -e https://github.com/joseisaacpy/my-template-next-app
-```
-
-Entre no diretório:
-
-```bash
 cd nome-do-projeto
-```
-
-Instale as dependências:
-
-```bash
 pnpm install
 ```
 
----
-
-## ⚙️ Configuração
-
-### Variáveis de Ambiente
-
-Copie o arquivo de exemplo:
+Variáveis de ambiente:
 
 ```bash
 cp .env.example .env
 ```
 
-Preencha com suas credenciais:
+Obrigatórias: `DATABASE_URL`, `BETTER_AUTH_SECRET` e `NEXT_PUBLIC_BASE_URL`.
+Todo o resto (OAuth, e-mail, `ADMIN_EMAILS`) é opcional e está comentado no
+`.env.example`. As variáveis são validadas por `env.ts`; o build falha cedo com
+mensagem clara (use `SKIP_ENV_VALIDATION=1` em CI sem segredos).
 
-```env
-# Banco (Neon)
-DATABASE_URL=
-DIRECT_URL=
-
-# Better Auth
-BETTER_AUTH_SECRET=
-BETTER_AUTH_URL=http://localhost:3000
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
-
-# Admins (opcional — e-mails separados por vírgula que nascem com papel admin)
-ADMIN_EMAILS=
-
-# OAuth (opcional — cada provedor liga sozinho quando as duas chaves existem)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-
-# E-mail (opcional — sem RESEND_API_KEY os e-mails saem no terminal)
-RESEND_API_KEY=
-EMAIL_FROM="Meu Template <onboarding@resend.dev>"
-```
-
-As variáveis são validadas na inicialização por `env.ts` (Zod). O build
-falha cedo com mensagem clara se algo obrigatório estiver faltando
-(use `SKIP_ENV_VALIDATION=1` em CI sem segredos).
-
----
-
-## 🗄️ Banco de Dados
-
-Aplicar as migrações no seu banco:
+Banco e execução:
 
 ```bash
-pnpm db:deploy      # produção / primeira vez
-pnpm db:migrate     # cria uma migração nova durante o desenvolvimento
+pnpm db:deploy   # aplica as migrações
+pnpm dev         # http://localhost:3000
 ```
 
-Iteração rápida sem migração e Prisma Studio:
-
-```bash
-pnpm db:push
-pnpm db:studio
-```
+Para virar admin, cadastre-se com um e-mail listado em `ADMIN_EMAILS`.
 
 ---
 
-## ▶️ Executando o Projeto
+## 📚 Documentação
 
-Modo desenvolvimento:
+Tudo sobre arquitetura, regras e decisões está em **[`docs/`](docs/README.md)**.
+Por onde começar:
 
-```bash
-pnpm dev
-```
-
-Acesse:
-
-```txt
-http://localhost:3000
-```
-
-Build de produção:
-
-```bash
-pnpm build
-pnpm start
-```
-
----
-
-## 🧱 Estrutura do Projeto
-
-```txt
-├── app
-│   ├── (public)        # rotas abertas (home, login, register, forgot/reset-password)
-│   ├── (private)       # rotas protegidas (dashboard, notes)
-│   ├── api
-│   ├── sitemap.ts · robots.ts · manifest.ts · icon.tsx · apple-icon.tsx
-│   └── providers.tsx   # theme, progress bar, page transitions
-│
-├── components
-│   ├── ui              # primitivos shadcn + helpers de form
-│   ├── layout          # Header, Footer, NavLink
-│   ├── theme           # ThemeProvider, ThemeButton
-│   ├── animations      # variantes Motion reutilizáveis
-│   └── providers       # PageTransition
-│
-├── features
-│   ├── auth            # domínio de autenticação (schemas, components, constants)
-│   └── example         # CRUD de referência (Notas) — molde de feature
-│       ├── actions · components · constants · hooks
-│       ├── repositories · schemas · services · types · utils
-│
-├── lib
-│   ├── actions         # createAction() + contrato ActionResult
-│   ├── auth            # Better Auth (server + client + session DAL)
-│   ├── db              # cliente Prisma único
-│   ├── email           # Resend + React Email (+ fallback console)
-│   └── errors          # AppError e subclasses de domínio
-│
-├── docs                # arquitetura, decisões, roadmap
-├── prisma              # schema.prisma + migrations + seed.ts
-├── .github/workflows   # CI (format, typecheck, lint, test, build)
-├── lefthook.yml        # git hooks (pre-commit, pre-push, commit-msg)
-├── nav.config.ts       # navegação + identidade do site
-└── env.ts              # validação de variáveis de ambiente (Zod)
-```
-
----
-
-## 🏗️ Arquitetura
-
-O projeto utiliza uma abordagem **Feature-Based Architecture**.
-
-Cada domínio da aplicação possui seus próprios arquivos:
-
-```txt
-features
-└── example                 # CRUD de referência (Notas)
-    ├── constants           # rota, limites de campo
-    ├── schemas             # Zod (create / update / delete)
-    ├── types               # DTO exposto ao client
-    ├── utils               # row Prisma → DTO
-    ├── repositories        # única camada que fala com o Prisma
-    ├── services            # regras de negócio + checagem de dono
-    ├── actions             # createAction() tipado + action crua (delete)
-    ├── hooks               # useActionState + toast
-    └── components          # form, list, row-actions, empty-state
-```
-
-Fluxo de uma operação: `component → action → service → repository → Prisma`.
-A autorização vive no `service` (`findByIdForUser` → `NotFoundError`, nunca
-`where: { id }` sem o `userId`). Copie a pasta e renomeie para criar uma feature.
-
-Benefícios:
-
-- Escalabilidade
-- Organização por domínio
-- Baixo acoplamento
-- Fácil manutenção
-- Melhor experiência para equipes
-
----
-
-## 🔐 Autenticação
-
-O projeto utiliza Better Auth com:
-
-- Login por email e senha
-- Login social com Google e GitHub (cada provedor liga sozinho quando as chaves existem)
-- Recuperação de senha por email → tela `/reset-password` (token na URL)
-- Verificação de email obrigatória, com auto-login ao confirmar
-- Logout e sessão validada no servidor (`getSession` / `requireUser`)
-- Rate limit persistido (`storage: "database"`)
-- Telas prontas: `/login`, `/register`, `/forgot-password`, `/reset-password`
-- Rotas privadas protegidas em `app/(private)`
-
-Regra de senha: mínimo 8 caracteres, com maiúscula, minúscula, dígito e
-caractere especial (`features/auth/schemas/auth.schema.ts`).
-
-Preparado para expansão com:
-
-- Novos provedores OAuth (GitLab, Discord, Microsoft, Apple, Facebook)
-- Role Based Access Control (RBAC)
-
----
-
-## 🎨 Componentes UI
-
-Primitivos shadcn/ui (`components/ui`):
-
-- `button`, `input`, `label`, `textarea`, `checkbox`, `select`
-- `card`, `dialog`, `table`
-- `sonner` (toasts) — `<Toaster />` já montado em `app/providers.tsx`
-
-Helpers de formulário:
-
-- `FormField` / `FormControl` / `useFormField` — label + controle + descrição + erro, com acessibilidade ligada
-- `FormError` — mensagem de erro de nível de formulário
-- `SubmitButton` — botão de submit com spinner e `disabled`/`aria-busy` automáticos (React Hook Form ou `useFormStatus`)
-
-Mais primitivos: `pnpm dlx shadcn@latest add <componente>`.
-
-## ⚙️ Server Actions
-
-`lib/actions/createAction()` monta uma action tipada pronta para `useActionState`:
-faz `requireUser()`, valida o `FormData` com um schema Zod, roda o handler,
-revalida caminhos e redireciona. Erros de validação viram
-`{ ok: false, fieldErrors }`; erros de domínio (`lib/errors`) viram
-`{ ok: false, error, code }`; o resto é logado e vira mensagem genérica.
-`features/example` mostra o padrão com wrapper (create/update) e o padrão de
-action crua (delete).
-
----
-
-## 🚀 Deploy
-
-Pronto para deploy em:
-
-- Vercel
-
-Após configurar as variáveis de ambiente, basta realizar o deploy normalmente.
+- [Arquitetura](docs/architecture.md) — mapa do projeto, camadas, auth, banco
+- [Fluxo de uma request](docs/request-flow.md) — proxy, layout, page, action
+- [Como adicionar uma feature](docs/how-to-add-a-feature.md) — e o que apagar do exemplo
+- [Roadmap](docs/roadmap.md) — o que já foi feito e o que falta
 
 ---
 
@@ -338,39 +91,16 @@ pnpm db:seed        # popula o banco (prisma/seed.ts)
 pnpm email:dev      # preview dos templates de e-mail (porta 3001)
 ```
 
----
+## 🚀 Deploy
 
-## 🛣️ Roadmap
-
-- [x] Autenticação por email e senha
-- [x] Recuperação de senha (link com token → `/reset-password`)
-- [x] Verificação de email (com auto-login)
-- [x] Login social (Google, GitHub)
-- [x] Logout + sessão no servidor
-- [x] CRUD de referência (Notas) + camada de server actions tipada
-- [x] Testes (Vitest) + CI (GitHub Actions)
-- [x] Prettier + git hooks (lefthook) + commitlint
-- [x] Security headers + imagem OG
-- [ ] Role Based Access Control (RBAC)
-- [ ] Upload de Arquivos
-- [ ] Stripe Integration
-- [ ] Docker
-- [ ] Internacionalização (i18n)
-
----
+Pronto para a Vercel. Configure as variáveis de ambiente e faça o deploy.
 
 ## 🤝 Contribuição
 
-Contribuições são bem-vindas.
-
-Sinta-se à vontade para abrir issues, enviar sugestões ou criar pull requests.
-
----
+Contribuições são bem-vindas: abra issues ou pull requests. Os commits seguem
+[Conventional Commits](https://www.conventionalcommits.org/) (validados pelo
+commitlint) e os git hooks formatam, rodam lint, typecheck e testes.
 
 ## 📄 Licença
 
 MIT
-
----
-
-Feito para acelerar o desenvolvimento de aplicações SaaS modernas com Next.js.

@@ -10,7 +10,10 @@ lugar: `nav.config.ts` (raiz do projeto). Esse arquivo alimenta:
 
 1. **Registrar a rota** em `nav.config.ts`:
    - adicione a chave em `RouteKey`;
-   - adicione a entrada em `routes` com `path`, `label` (o nome) e `description`.
+   - adicione a entrada em `routes` com `path`, `label` (o nome) e `description`;
+   - campos opcionais: `auth: true` (exige sessão), `roles: ["admin"]` (só
+     esconde o link no menu para quem não tem o papel), `icon` e `sitemap`
+     (`false` tira do `sitemap.xml`; rotas `auth: true` nunca entram).
 
    ```ts
    export type RouteKey = /* ... */ "settings";
@@ -45,6 +48,11 @@ lugar: `nav.config.ts` (raiz do projeto). Esse arquivo alimenta:
 
 4. **Rota privada?** Adicione o prefixo em `PRIVATE_PREFIXES` no `proxy.ts` e
    valide a sessão na page com `requireUser()` (`lib/auth/session.ts`).
+   Restrita a um papel? Use `await requireRole("admin")` — sem permissão
+   responde 404. O `roles` em `nav.config.ts` é só visual.
+
+Criando uma funcionalidade completa (model, service, action)? Veja
+[how-to-add-a-feature.md](how-to-add-a-feature.md).
 
 ## `createMetadata()`
 
@@ -86,7 +94,9 @@ export async function generateMetadata({
 
 ## Header
 
-`components/layout/Header.tsx` renderiza `nav.header`. Já está montado em
+`components/layout/Header.tsx` renderiza `nav.header` (e o `MobileNav` em telas
+pequenas). Mostra só os itens permitidos: `auth: true` exige `user`, e `roles`
+exige que o `user.role` esteja na lista. Já está montado em
 `app/(private)/layout.tsx`. Para usá-lo em outra área:
 
 ```tsx
@@ -113,18 +123,14 @@ chaves em `nav.footer` no `nav.config.ts`.
 - rotas privadas sem cookie → `/login?redirect=<path>`;
 - `/login` ou `/register` com cookie → `/dashboard`.
 
-`PRIVATE_PREFIXES` (hoje `["/dashboard", "/notes", "/admin"]`) deve espelhar as rotas
-`auth: true` do `nav.config.ts`.
+`PRIVATE_PREFIXES` (hoje `["/dashboard", "/notes", "/admin"]`) deve espelhar o
+1º segmento das rotas `auth: true` do `nav.config.ts`. O `robots.txt` usa a
+outra lista, `privatePathPrefixes()` (derivada do `nav.config.ts`), que deve
+coincidir com a do proxy.
 
 A validação real da sessão (cookie válido, usuário existe) é feita no layout e
 em cada page/action da área privada via `requireUser()` — o proxy não acessa o
 banco.
-
-## Variáveis de ambiente
-
-`env.ts` (raiz) valida `process.env` com zod na inicialização. Módulos server
-importam `import { env } from "@/env"`. Faltando variável obrigatória, o app
-não sobe. Em CI sem segredos: `SKIP_ENV_VALIDATION=1`.
 
 ## Rotas atuais
 
@@ -137,6 +143,7 @@ não sobe. Em CI sem segredos: `SKIP_ENV_VALIDATION=1`.
 | `/reset-password`  | pública | `noIndex`, fora do sitemap, só com `?token` |
 | `/dashboard`       | privada | `requireUser()`                             |
 | `/notes`           | privada | CRUD de referência, `requireUser()`         |
+| `/admin/users`     | privada | só admin, `requireRole("admin")`            |
 
 ## Imagem OG
 

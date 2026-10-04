@@ -8,6 +8,7 @@
 - recuperação de senha (e-mail com token → `/reset-password`)
 - login social Google / GitHub (opt-in por env)
 - rotas privadas protegidas
+- papéis (RBAC): `user` e `admin`, com área `/admin/users`
 
 ## Regras
 
@@ -72,7 +73,9 @@ Dois papéis: `user` (padrão) e `admin`, via plugin `admin` do better-auth.
 - **Menu:** `roles: ["admin"]` na rota em `nav.config.ts` esconde o link; é só
   visual, a barreira real é `requireRole` / `roles`.
 - O `proxy.ts` continua checando só o cookie, não o papel.
-- Papel novo no `ROLES` exige registrá-lo no plugin (`createAccessControl`).
+- Hoje só existem os papéis padrão do plugin. Papéis novos ou permissões por
+  recurso exigem `createAccessControl` (servidor e `adminClient()`) — não
+  implementado; ver `docs/decisions.md`.
 - Após trocar o papel de alguém, a sessão dele pode levar até 5 min para refletir
   (`cookieCache`).
 - Contas criadas antes do RBAC têm `role` nulo e valem como `user`.

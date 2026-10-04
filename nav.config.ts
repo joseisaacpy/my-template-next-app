@@ -16,13 +16,7 @@ import type { Role } from "@/lib/auth/roles";
  * - registro de rotas: cada página tem uma chave, um caminho e um "nome";
  * - itens exibidos no header / footer.
  *
- * Ao criar uma rota nova:
- * 1. adicione a chave em `RouteKey` e uma entrada em `routes`
- *    (com `path`, `label` e `description`);
- * 2. na `page.tsx`, exporte a metadata pré-pronta:
- *      export const metadata = createMetadata({ route: "<chave>" });
- * 3. se a rota deve aparecer no menu, inclua a chave em `nav.header`
- *    (ou `nav.footer`).
+ * Ao criar uma rota nova, siga o passo a passo em `docs/routing.md`.
  */
 
 export const site = {
