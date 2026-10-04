@@ -1,0 +1,26 @@
+# Dependências e saídas de build (são geradas dentro da imagem)
+node_modules
+.next
+lib/generated
+*.tsbuildinfo
+
+# Segredos e config local — nunca entram na imagem
+.env
+.env.*
+!.env.example
+
+# Git, CI e editor
+.git
+.github
+.vscode
+.idea
+
+# Não são usados no build
+docs
+**/*.test.ts
+vitest
+coverage
+.react-email
+Dockerfile
+docker-compose.yml
+.dockerignore

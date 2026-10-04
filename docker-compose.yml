@@ -1,0 +1,67 @@
+# Postgres + migrações + app. Guia completo: docs/docker.md
+#
+#   docker compose up --build   # sobe tudo (app em http://localhost:3000)
+#   docker compose up -d db     # só o banco (use com `pnpm dev` no host)
+#
+# Variáveis lidas do `.env` (opcional): BETTER_AUTH_SECRET, ADMIN_EMAILS,
+# NEXT_PUBLIC_BASE_URL, RESEND_API_KEY, POSTGRES_*, APP_PORT e DB_PORT
+# (mudou APP_PORT? ajuste NEXT_PUBLIC_BASE_URL para a mesma porta).
+
+name: my-template
+
+x-database-url: &database-url postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-app}
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+    ports:
+      # Exposta no host para `pnpm dev` / `pnpm db:migrate` / Prisma Studio.
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  # Roda `prisma migrate deploy` uma vez e sai; o app só sobe depois.
+  migrate:
+    build:
+      context: .
+      target: migrate
+    environment:
+      DATABASE_URL: *database-url
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runner
+      args:
+        # Embutida no bundle no build — mudou? rode `docker compose build app`.
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: *database-url
+      DATABASE_DRIVER: pg
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      # Sem RESEND_API_KEY, os e-mails (verificação, reset) saem em
+      # `docker compose logs app`.
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  db-data:

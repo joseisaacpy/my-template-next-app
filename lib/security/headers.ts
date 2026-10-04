@@ -10,7 +10,7 @@
  * Usa uma nova origem externa (analytics, imagens, fontes, API)? Adicione-a
  * na diretiva correspondente abaixo, senão o navegador bloqueia.
  */
-export function buildCsp(isDev: boolean): string {
+export function buildCsp(isDev: boolean, https: boolean): string {
   const directives = [
     "default-src 'self'",
     // React usa `eval` em dev (stacks de erro do servidor); em produção não.
@@ -25,8 +25,11 @@ export function buildCsp(isDev: boolean): string {
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "upgrade-insecure-requests",
   ];
+
+  // Só com HTTPS: em `http://localhost` (ex.: Docker) essa diretiva faz o
+  // Safari tentar carregar os assets por https e a página quebra.
+  if (https) directives.push("upgrade-insecure-requests");
 
   return directives.join("; ");
 }
@@ -37,7 +40,10 @@ export function buildCsp(isDev: boolean): string {
 export const securityHeaders = [
   {
     key: "Content-Security-Policy",
-    value: buildCsp(process.env.NODE_ENV !== "production"),
+    value: buildCsp(
+      process.env.NODE_ENV !== "production",
+      Boolean(process.env.NEXT_PUBLIC_BASE_URL?.startsWith("https://")),
+    ),
   },
   // Impede o navegador de "adivinhar" o tipo do arquivo.
   { key: "X-Content-Type-Options", value: "nosniff" },

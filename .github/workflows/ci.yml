@@ -33,3 +33,12 @@ jobs:
       - run: pnpm build
         env:
           SKIP_ENV_VALIDATION: "1"
+
+  # Garante que o Dockerfile continua buildando (não publica a imagem).
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: docker build --target migrate -t my-template-migrate .
+      - run: docker build --target runner -t my-template-app .
