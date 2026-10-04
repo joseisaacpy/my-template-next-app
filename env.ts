@@ -18,7 +18,12 @@ const envSchema = z.object({
   DATABASE_DRIVER: z.enum(["neon", "pg"]).default("neon"),
 
   // Better Auth
-  BETTER_AUTH_SECRET: z.string().min(1, "defina BETTER_AUTH_SECRET"),
+  BETTER_AUTH_SECRET: z
+    .string()
+    .min(
+      32,
+      "use pelo menos 32 caracteres — gere com: openssl rand -base64 32",
+    ),
   NEXT_PUBLIC_BASE_URL: z.url(),
 
   // Nível mínimo dos logs (lib/logger.ts). Sem ele: info em produção, debug em dev.
@@ -58,7 +63,7 @@ function parseEnv(): z.infer<typeof envSchema> {
 
     throw new Error(
       `Variáveis de ambiente inválidas:\n${issues}\n\n` +
-        "Copie .env.example para .env e preencha os valores.",
+        "Rode `pnpm bootstrap` (cria o .env e o banco) ou copie .env.example para .env.",
     );
   }
 

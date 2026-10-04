@@ -7,7 +7,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   // No servidor use `logger` (lib/logger.ts), não `console`. Exceções: o próprio
-  // logger, o seed (script de CLI) e os arquivos que usam `console` de propósito.
+  // logger, o seed e `scripts/` (scripts de CLI) e os arquivos que usam `console` de propósito.
   { rules: { "no-console": "error" } },
   {
     files: [
@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
       "lib/email/transports/console.ts",
       "lib/observability/capture-error.ts",
       "prisma/seed.ts",
+      "scripts/**",
     ],
     rules: { "no-console": "off" },
   },
