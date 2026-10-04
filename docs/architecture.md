@@ -40,6 +40,8 @@ lib/
 prisma/                schema.prisma, migrations/, seed.ts
 public/                arquivos estáticos (vazio no template)
 Dockerfile · docker-compose.yml   imagem standalone + Postgres (docs/docker.md)
+scripts/setup.ts       `pnpm bootstrap`: .env, segredo, banco e migrações
+.vscode/ · .npmrc      extensões/format recomendados · engine-strict (Node 24, pnpm 10)
 docs/                  esta documentação
 vitest/stubs/          stub de `server-only` para os testes
 instrumentation.ts    onRequestError: loga erros de servidor
@@ -156,7 +158,7 @@ e `loading.tsx` por rota quando fizer sentido (ex.: `app/(private)/notes/`).
 ## Qualidade
 
 - Testes: [testing.md](testing.md) (Vitest, `*.test.ts` ao lado do código).
-- Git hooks (lefthook, instalados no `pnpm install`): `pre-commit` formata e
+- Git hooks (lefthook, instalados no `pnpm install` quando há um repo git): `pre-commit` formata e
   roda ESLint nos arquivos staged; `pre-push` roda `typecheck` e `test`;
   `commit-msg` valida Conventional Commits (commitlint). Pular pontualmente:
   `LEFTHOOK=0`.

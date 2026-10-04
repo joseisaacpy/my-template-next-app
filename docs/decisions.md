@@ -181,3 +181,19 @@ como "Substituída") — não apague o histórico.
   nada. Quem precisar de recursos avançados (rotação, transports) pode trocar
   pelo `pino` mantendo a mesma API `logger.info/error`. O `captureError` roda no
   navegador e continua em `console`; `prisma/seed.ts` também.
+
+## 15. Bootstrap sem dependências e seed de demonstração com guardas
+
+- **Status:** aceita
+- **Contexto:** do clone ao primeiro login eram ~7 passos manuais; o seed estava
+  quebrado e o cadastro exige verificar e-mail, que só aparece no terminal.
+- **Decisão:** `pnpm bootstrap` (`scripts/setup.ts`, só `node:*`) cria o `.env`,
+  gera o `BETTER_AUTH_SECRET`, sobe o Postgres do compose e migra, preenchendo só
+  o que está em branco. O seed (`tsx`) cria um admin demo com e-mail já verificado
+  e notas, usando o hash do próprio better-auth.
+- **Alternativas:** só documentar os passos (descartada: o clone continua com 5
+  passos manuais); semear pela API do better-auth (descartada: o `auth.ts`
+  importa `@/`, `server-only` e `env.ts`, que não funcionam fora do Next).
+- **Consequências:** o seed cria uma credencial **conhecida**, então recusa
+  `NODE_ENV=production` e banco não local sem `SEED_ALLOW_REMOTE=1`. O segredo
+  passou a exigir 32+ caracteres e o `.npmrc` liga `engine-strict`.

@@ -39,14 +39,17 @@ app para o serviço `db` e usa o driver `pg`.
 docker compose up -d db
 ```
 
-No `.env`:
+O jeito mais simples é `pnpm bootstrap` (ver [getting-started.md](getting-started.md)):
+ele cria o `.env`, sobe este banco e aplica as migrações. Depois, `pnpm dev`.
+
+À mão, no `.env`:
 
 ```env
 DATABASE_DRIVER=pg
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/app
 ```
 
-Depois `pnpm db:deploy` e `pnpm dev`. Prisma Studio (`pnpm db:studio`) e
+e `pnpm db:deploy`. Prisma Studio (`pnpm db:studio`) e
 `pnpm db:migrate` também funcionam contra esse banco.
 
 ## Variáveis do compose

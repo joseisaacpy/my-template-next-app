@@ -31,39 +31,35 @@ Desenvolva funcionalidades, não setup.
 
 ## 📦 Começando
 
+Pré-requisitos: **Node 24**, **pnpm 10** (`corepack enable`) e **Docker** (ou uma
+URL de Postgres, como o Neon).
+
+Crie o seu projeto pelo botão **Use this template** do repositório no GitHub (ou
+`git clone` e `rm -rf .git && git init`) e rode:
+
 ```bash
-npx create-next-app@latest -e https://github.com/joseisaacpy/my-template-next-app
-cd nome-do-projeto
 pnpm install
-```
-
-Variáveis de ambiente:
-
-```bash
-cp .env.example .env
-```
-
-Obrigatórias: `DATABASE_URL`, `BETTER_AUTH_SECRET` e `NEXT_PUBLIC_BASE_URL`.
-Todo o resto (OAuth, e-mail, `ADMIN_EMAILS`) é opcional e está comentado no
-`.env.example`. As variáveis são validadas por `env.ts`; o build falha cedo com
-mensagem clara (use `SKIP_ENV_VALIDATION=1` em CI sem segredos).
-
-Banco e execução:
-
-```bash
-pnpm db:deploy   # aplica as migrações
+pnpm bootstrap   # cria o .env, gera o segredo, sobe o Postgres e aplica as migrações
+pnpm db:seed     # (opcional) admin demo: admin@example.com / Admin@12345
 pnpm dev         # http://localhost:3000
 ```
 
-Para virar admin, cadastre-se com um e-mail listado em `ADMIN_EMAILS`.
+O `pnpm bootstrap` é seguro de repetir e não sobrescreve nada que você já
+preencheu no `.env`. Quer usar o Neon? Coloque a `DATABASE_URL` no `.env` antes.
+Todo o passo a passo, problemas comuns e o que ajustar depois do clone estão em
+[`docs/getting-started.md`](docs/getting-started.md).
 
-**Sem conta no Neon?** Suba o Postgres e o app com Docker:
+As variáveis são validadas por `env.ts`; o build falha cedo com mensagem clara
+(use `SKIP_ENV_VALIDATION=1` em CI sem segredos). Para virar admin, cadastre-se
+com um e-mail listado em `ADMIN_EMAILS`.
+
+**Tudo em container?** Suba o Postgres e o app com Docker:
 
 ```bash
 docker compose up --build   # http://localhost:3000
 ```
 
-Veja [`docs/docker.md`](docs/docker.md) (inclui só o banco em container com `pnpm dev`).
+Veja [`docs/docker.md`](docs/docker.md).
 
 ---
 
@@ -94,7 +90,8 @@ pnpm db:deploy      # aplica migrações (produção / setup)
 pnpm db:migrate     # cria e aplica uma migração nova (dev)
 pnpm db:push        # sincroniza sem migração (protótipo)
 pnpm db:studio      # Prisma Studio
-pnpm db:seed        # popula o banco (prisma/seed.ts)
+pnpm bootstrap      # primeiro setup: .env, banco e migrações
+pnpm db:seed        # admin demo e notas de exemplo (só em banco local)
 
 pnpm email:dev      # preview dos templates de e-mail (porta 3001)
 ```

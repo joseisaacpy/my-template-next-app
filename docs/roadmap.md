@@ -28,18 +28,15 @@
 - docs de arquitetura: índice, fluxo de request, how-to de feature, testes, ADRs
 - `robots.txt` bloqueia `/admin` inteiro
 
-## Feito (P1)
+## Feito (P1 — completo)
 
 - Docker: imagem standalone + compose com Postgres (`docs/docker.md`) e driver `pg`
+- DX do clone: `pnpm bootstrap`, seed com admin demo, `.vscode`, `engine-strict` e guias (`docs/getting-started.md`)
 - Logger: `lib/logger.ts`, `instrumentation.ts` (`onRequestError`) e logger do Better Auth (`docs/logging.md`)
 
 ## P0 — pendente
 
 - testes de integração
-
-## P1
-
-- melhorar a DX do clone
 
 ## P2
 

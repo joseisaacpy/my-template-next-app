@@ -1,21 +1,22 @@
 # Documentação
 
 Ponto de partida para quem acabou de clonar o template. Comece pelo
-[README da raiz](../README.md) (instalação e scripts) e siga esta ordem:
+[README da raiz](../README.md) e siga esta ordem:
 
 | #   | Doc                                                | Leia quando                                                     |
 | --- | -------------------------------------------------- | --------------------------------------------------------------- |
-| 1   | [architecture.md](architecture.md)                 | quer o mapa do projeto: pastas, camadas, auth, banco            |
-| 2   | [request-flow.md](request-flow.md)                 | quer entender o caminho de uma request e de uma server action   |
-| 3   | [how-to-add-a-feature.md](how-to-add-a-feature.md) | vai criar uma funcionalidade (ou limpar o exemplo para começar) |
-| 4   | [constitution.md](constitution.md)                 | quer as regras de código do projeto, curtas e diretas           |
-| 5   | [routing.md](routing.md)                           | vai criar uma página, mexer no menu ou na metadata              |
-| 6   | [features/auth.md](features/auth.md)               | vai mexer em login, sessão ou papéis (RBAC)                     |
-| 7   | [testing.md](testing.md)                           | vai escrever ou rodar testes                                    |
-| 8   | [docker.md](docker.md)                             | quer rodar com Postgres em container ou gerar a imagem do app   |
-| 9   | [logging.md](logging.md)                           | quer logar algo ou entender onde os erros aparecem              |
-| 10  | [decisions.md](decisions.md)                       | quer saber **por que** algo foi feito assim antes de mudar      |
-| 11  | [roadmap.md](roadmap.md)                           | quer ver o que já foi feito e o que falta                       |
+| 1   | [getting-started.md](getting-started.md)           | acabou de clonar: do clone ao login em 4 comandos               |
+| 2   | [architecture.md](architecture.md)                 | quer o mapa do projeto: pastas, camadas, auth, banco            |
+| 3   | [request-flow.md](request-flow.md)                 | quer entender o caminho de uma request e de uma server action   |
+| 4   | [how-to-add-a-feature.md](how-to-add-a-feature.md) | vai criar uma funcionalidade (ou limpar o exemplo para começar) |
+| 5   | [constitution.md](constitution.md)                 | quer as regras de código do projeto, curtas e diretas           |
+| 6   | [routing.md](routing.md)                           | vai criar uma página, mexer no menu ou na metadata              |
+| 7   | [features/auth.md](features/auth.md)               | vai mexer em login, sessão ou papéis (RBAC)                     |
+| 8   | [testing.md](testing.md)                           | vai escrever ou rodar testes                                    |
+| 9   | [docker.md](docker.md)                             | quer rodar com Postgres em container ou gerar a imagem do app   |
+| 10  | [logging.md](logging.md)                           | quer logar algo ou entender onde os erros aparecem              |
+| 11  | [decisions.md](decisions.md)                       | quer saber **por que** algo foi feito assim antes de mudar      |
+| 12  | [roadmap.md](roadmap.md)                           | quer ver o que já foi feito e o que falta                       |
 
 ## Em uma frase cada
 
