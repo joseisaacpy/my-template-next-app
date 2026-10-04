@@ -17,6 +17,8 @@ Better Auth (email/senha + Google/GitHub opt-in).
 - `lib/auth/auth-client.ts` — client (`signIn`, `signUp`, `signOut`, `useSession`).
 - `lib/auth/session.ts` — **DAL**: `getSession` / `requireSession` / `requireUser`
   (memoizados com `cache()` do React). Toda page/action privada passa por aqui.
+- `lib/auth/roles.ts` — `ROLES`, `hasRole()`, `isAdminEmail()` (client-safe).
+- `requireRole(...roles)` (no DAL) — protege pages por papel; sem permissão → 404.
 - `lib/auth/social-providers.ts` — quais provedores OAuth estão configurados.
 
 ## Database

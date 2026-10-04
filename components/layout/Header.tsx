@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { ThemeButton } from "@/components/theme/ThemeButton";
 import { LogoutButton } from "@/features/auth";
+import { hasRole } from "@/lib/auth/roles";
 import { cn } from "@/lib/utils";
 import { nav, site } from "@/nav.config";
 
@@ -12,6 +13,8 @@ interface HeaderUser {
   name?: string | null;
   email: string;
   image?: string | null;
+  /** Papel do usuário (plugin admin). Usado para filtrar itens com `roles`. */
+  role?: string | null;
 }
 
 interface HeaderProps {
@@ -33,7 +36,11 @@ function initialOf(user: HeaderUser): string {
  */
 export function Header({ user, authenticated, className }: HeaderProps) {
   const isAuthenticated = authenticated ?? Boolean(user);
-  const links = nav.header.filter((item) => !item.auth || isAuthenticated);
+  const links = nav.header.filter(
+    (item) =>
+      (!item.auth || isAuthenticated) &&
+      (!item.roles || (user != null && hasRole(user, ...item.roles))),
+  );
 
   return (
     <header

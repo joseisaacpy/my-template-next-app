@@ -13,6 +13,7 @@ describe("sitemapRoutes", () => {
   it("exclui rotas auth: true", () => {
     expect(paths).not.toContain("/dashboard");
     expect(paths).not.toContain("/notes");
+    expect(paths).not.toContain("/admin/users");
   });
 
   it("exclui rotas marcadas com sitemap: false", () => {
@@ -33,5 +34,11 @@ describe("privatePathPrefixes", () => {
       .map((r) => r.path)
       .sort();
     expect([...privatePathPrefixes()].sort()).toEqual(expected);
+  });
+});
+
+describe("rota admin", () => {
+  it("exige sessão e o papel admin", () => {
+    expect(routes.admin).toMatchObject({ auth: true, roles: ["admin"] });
   });
 });

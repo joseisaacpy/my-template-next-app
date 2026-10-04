@@ -24,6 +24,7 @@
 ## Feito (P0)
 
 - `Content-Security-Policy` estática + headers em `lib/security/headers.ts`
+- RBAC: plugin `admin` (user/admin), `requireRole`, `createAction({ roles })`, `/admin/users`
 
 ## T3 — não bloqueia, quando fizer sentido
 
@@ -37,7 +38,6 @@
 - onboarding
 - billing / Stripe
 - organization system
-- RBAC (plugin `admin` do better-auth)
 - notifications
 - email queue
 - upload de arquivos

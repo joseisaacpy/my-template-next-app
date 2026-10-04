@@ -113,7 +113,7 @@ chaves em `nav.footer` no `nav.config.ts`.
 - rotas privadas sem cookie → `/login?redirect=<path>`;
 - `/login` ou `/register` com cookie → `/dashboard`.
 
-`PRIVATE_PREFIXES` (hoje `["/dashboard", "/notes"]`) deve espelhar as rotas
+`PRIVATE_PREFIXES` (hoje `["/dashboard", "/notes", "/admin"]`) deve espelhar as rotas
 `auth: true` do `nav.config.ts`.
 
 A validação real da sessão (cookie válido, usuário existe) é feita no layout e

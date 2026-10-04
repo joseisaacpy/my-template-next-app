@@ -1,5 +1,12 @@
 import type { LucideIcon } from "lucide-react";
-import { HomeIcon, LayoutDashboardIcon, NotebookIcon } from "lucide-react";
+import {
+  HomeIcon,
+  LayoutDashboardIcon,
+  NotebookIcon,
+  ShieldIcon,
+} from "lucide-react";
+
+import type { Role } from "@/lib/auth/roles";
 
 /**
  * Configuração central de navegação e identidade do site.
@@ -71,7 +78,8 @@ export type RouteKey =
   | "forgotPassword"
   | "resetPassword"
   | "dashboard"
-  | "notes";
+  | "notes"
+  | "admin";
 
 export interface RouteMeta {
   /** Caminho real da rota. */
@@ -82,6 +90,11 @@ export interface RouteMeta {
   description: string;
   /** `true` quando a rota exige sessão. */
   auth?: boolean;
+  /**
+   * Papéis que veem a rota no menu. Omitido = qualquer um. Só esconde o link:
+   * a proteção real é `requireRole()` na page (ver `lib/auth/session.ts`).
+   */
+  roles?: Role[];
   /** Ícone opcional para uso no menu / sidebar. */
   icon?: LucideIcon;
   /**
@@ -141,6 +154,14 @@ export const routes: Record<RouteKey, RouteMeta> = {
     auth: true,
     icon: NotebookIcon,
   },
+  admin: {
+    path: "/admin/users",
+    label: "Admin",
+    description: "Gerencie os usuários e seus papéis.",
+    auth: true,
+    roles: ["admin"],
+    icon: ShieldIcon,
+  },
 };
 
 export interface NavLinkItem extends RouteMeta {
@@ -159,7 +180,7 @@ function items(keys: RouteKey[]): NavLinkItem[] {
  * Itens com `auth: true` só aparecem quando `authenticated` é passado ao `<Header />`.
  */
 export const nav = {
-  header: items(["home", "dashboard", "notes"]),
+  header: items(["home", "dashboard", "notes", "admin"]),
   footer: items([]),
 } as const;
 

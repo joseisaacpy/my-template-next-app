@@ -4,7 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect, unstable_rethrow } from "next/navigation";
 import type { z } from "zod";
 
+import { hasRole, type Role } from "@/lib/auth/roles";
 import { requireUser } from "@/lib/auth/session";
+import { ForbiddenError } from "@/lib/errors";
 
 import { toActionError } from "./to-action-error";
 import type { ActionResult } from "./types";
@@ -19,6 +21,11 @@ interface CreateActionConfig<Schema extends z.ZodType, Data> {
     input: z.output<Schema>,
     ctx: { user: SessionUser },
   ) => Promise<Data>;
+  /**
+   * Restringe a action a estes papéis. Sem permissão retorna
+   * `{ ok: false, code: "FORBIDDEN" }`. Omitido = qualquer usuário logado.
+   */
+  roles?: Role[];
   /** Caminhos a revalidar após sucesso. */
   revalidate?: string[];
   /** Redireciona para cá após sucesso (a action não retorna nesse caso). */
@@ -28,7 +35,7 @@ interface CreateActionConfig<Schema extends z.ZodType, Data> {
 /**
  * Monta uma server action tipada pronta para `useActionState`.
  *
- * Faz, na ordem: `requireUser()` → valida o `FormData` → `handler` →
+ * Faz, na ordem: `requireUser()` → checa `roles` → valida o `FormData` → `handler` →
  * `revalidatePath` → `redirect` → `{ ok: true, data }`. Qualquer `ZodError`
  * ou `AppError` vira `{ ok: false, ... }`; o resto é logado e some atrás de
  * uma mensagem genérica. `unstable_rethrow` roda primeiro no `catch` para não
@@ -51,6 +58,10 @@ export function createAction<Schema extends z.ZodType, Data = void>(
   ): Promise<ActionResult<Data>> {
     try {
       const user = await requireUser();
+
+      if (config.roles && !hasRole(user, ...config.roles)) {
+        throw new ForbiddenError();
+      }
 
       const parsed = config.schema.safeParse(Object.fromEntries(formData));
       if (!parsed.success) {

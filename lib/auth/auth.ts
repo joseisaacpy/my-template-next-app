@@ -1,8 +1,10 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
+import { admin } from "better-auth/plugins/admin";
 
 import { env } from "@/env";
+import { isAdminEmail } from "@/lib/auth/roles";
 import { prisma } from "@/lib/db/prisma";
 import { ResetPassword, VerifyEmail, sendEmail } from "@/lib/email";
 
@@ -91,7 +93,24 @@ export const auth = betterAuth({
 
   socialProviders: buildSocialProviders(),
 
-  // `nextCookies` intercepta a resposta para gravar os cookies de sessão em
-  // server actions — precisa ser o ÚLTIMO plugin do array.
-  plugins: [nextCookies()],
+  databaseHooks: {
+    user: {
+      create: {
+        // Bootstrap do primeiro admin: e-mail listado em `ADMIN_EMAILS` nasce
+        // com papel "admin". Seguro porque o cadastro exige e-mail verificado.
+        async before(user) {
+          if (!isAdminEmail(user.email, env.ADMIN_EMAILS)) return;
+          return { data: { ...user, role: "admin" } };
+        },
+      },
+    },
+  },
+
+  plugins: [
+    // Papéis padrão "user" e "admin" (ver lib/auth/roles.ts).
+    admin(),
+    // `nextCookies` intercepta a resposta para gravar os cookies de sessão em
+    // server actions — precisa ser o ÚLTIMO plugin do array.
+    nextCookies(),
+  ],
 });

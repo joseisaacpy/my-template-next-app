@@ -59,6 +59,24 @@ status `429` ("muitas tentativas"). Cópia neutra, não revela qual campo falhou
 Use `requireUser()` em toda page e action privada. O `proxy.ts` é só a primeira
 barreira (otimista, sem banco).
 
+## Papéis (RBAC)
+
+Dois papéis: `user` (padrão) e `admin`, via plugin `admin` do better-auth.
+
+- **Primeiro admin:** liste o e-mail em `ADMIN_EMAILS` (`.env`) e cadastre-se.
+  Só vale na criação da conta (seguro porque o e-mail precisa ser verificado).
+  Depois, admins trocam papéis em `/admin/users`.
+- **Proteger page:** `await requireRole("admin")` — sem permissão responde 404.
+- **Proteger action:** `createAction({ roles: ["admin"], ... })` — sem permissão
+  retorna `{ ok: false, code: "FORBIDDEN" }`.
+- **Menu:** `roles: ["admin"]` na rota em `nav.config.ts` esconde o link; é só
+  visual, a barreira real é `requireRole` / `roles`.
+- O `proxy.ts` continua checando só o cookie, não o papel.
+- Papel novo no `ROLES` exige registrá-lo no plugin (`createAccessControl`).
+- Após trocar o papel de alguém, a sessão dele pode levar até 5 min para refletir
+  (`cookieCache`).
+- Contas criadas antes do RBAC têm `role` nulo e valem como `user`.
+
 ## Login social
 
 `lib/auth/social-providers.ts` → `enabledSocialProviders()` lê os envs OAuth no

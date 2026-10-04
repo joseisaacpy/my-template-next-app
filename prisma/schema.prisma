@@ -27,6 +27,12 @@ model User {
   email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
+  // Plugin `admin` do better-auth: papel ("user" | "admin") e banimento.
+  // `role` nulo (contas antigas) é tratado como "user" — ver lib/auth/roles.ts.
+  role          String?
+  banned        Boolean   @default(false)
+  banReason     String?
+  banExpires    DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
@@ -46,6 +52,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Plugin `admin`: id do admin que está impersonando (não usado na UI).
+  impersonatedBy String?
 
   @@index([userId])
   @@map("session")

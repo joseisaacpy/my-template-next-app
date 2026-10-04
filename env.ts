@@ -19,6 +19,9 @@ const envSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(1, "defina BETTER_AUTH_SECRET"),
   NEXT_PUBLIC_BASE_URL: z.url(),
 
+  // RBAC — e-mails (separados por vírgula) que viram admin ao criar a conta.
+  ADMIN_EMAILS: z.string().optional(),
+
   // OAuth — opt-in por provedor (ver lib/auth/auth.ts)
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),

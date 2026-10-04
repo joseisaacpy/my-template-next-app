@@ -18,6 +18,9 @@
 - Prisma só em `repositories/` — service e action nunca importam o client direto
 - Autorização no `service`: toda busca por id passa o `userId`; recurso de
   outro usuário responde `NotFoundError` (404), não 403
+- Autorização por papel: page → `requireRole("admin")` (404 se negado); action →
+  `createAction({ roles: ["admin"] })` (`FORBIDDEN` se negado). Nomes de papel só
+  via `Role` de `lib/auth/roles.ts`
 - DTO na fronteira: o service devolve o DTO, não a linha crua do Prisma
 - Nunca acessar Prisma no client
 - Components desacoplados

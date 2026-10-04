@@ -122,6 +122,9 @@ BETTER_AUTH_SECRET=
 BETTER_AUTH_URL=http://localhost:3000
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
+# Admins (opcional — e-mails separados por vírgula que nascem com papel admin)
+ADMIN_EMAILS=
+
 # OAuth (opcional — cada provedor liga sozinho quando as duas chaves existem)
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
