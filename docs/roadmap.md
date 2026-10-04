@@ -21,9 +21,13 @@
 - `home-view.tsx` sem dados pessoais hardcoded (`site.author` / `site.repoUrl`)
 - `ThemeButton` com `useSyncExternalStore` (`useMounted`)
 
+## Feito (P0)
+
+- `Content-Security-Policy` estática + headers em `lib/security/headers.ts`
+
 ## T3 — não bloqueia, quando fizer sentido
 
-- `Content-Security-Policy` com nonce (middleware)
+- CSP com nonce (opcional — hoje é estática, ver `docs/decisions.md`)
 - provedor de observabilidade real (Sentry) em `captureError`
 - Docker
 - `.github/` templates de issue/PR + Dependabot
