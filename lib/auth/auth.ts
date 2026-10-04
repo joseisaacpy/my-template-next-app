@@ -7,6 +7,7 @@ import { env } from "@/env";
 import { isAdminEmail } from "@/lib/auth/roles";
 import { prisma } from "@/lib/db/prisma";
 import { ResetPassword, VerifyEmail, sendEmail } from "@/lib/email";
+import { logger } from "@/lib/logger";
 
 const SECOND = 1;
 const MINUTE = 60 * SECOND;
@@ -92,6 +93,13 @@ export const auth = betterAuth({
   trustedOrigins: [env.NEXT_PUBLIC_BASE_URL],
 
   socialProviders: buildSocialProviders(),
+
+  // Avisos e erros do better-auth (segredo curto, provedor sem chave...) passam
+  // pelo nosso logger. O nível mínimo dele é `warn` por padrão.
+  logger: {
+    log: (level, message, ...args) =>
+      logger[level](message, args.length ? { args } : undefined),
+  },
 
   databaseHooks: {
     user: {
