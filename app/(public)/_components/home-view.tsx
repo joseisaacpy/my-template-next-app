@@ -108,14 +108,14 @@ export function HomeView() {
       >
         <motion.span
           variants={slideUp}
-          className="text-muted-foreground mb-3 inline-block rounded-full border px-3 py-1 text-xs"
+          className="text-muted-foreground hover:bg-muted/50 hover:text-foreground mb-3 inline-block rounded-full border px-3 py-1 text-xs transition"
         >
           Usado em 5+ projetos reais
         </motion.span>
 
         <motion.h1
           variants={slideUp}
-          className="text-4xl font-bold"
+          className="font-display text-4xl font-extrabold tracking-tight sm:text-6xl"
           onClick={teste}
         >
           Next.js Fullstack Starter
@@ -146,7 +146,9 @@ export function HomeView() {
 
       {/* STACK */}
       <section className="mt-4 w-full max-w-4xl">
-        <h2 className="mb-2 text-2xl font-semibold">Stack</h2>
+        <h2 className="font-display mb-2 text-2xl font-semibold tracking-tight">
+          Stack
+        </h2>
 
         <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
           {stack.map((item) => (
@@ -172,7 +174,9 @@ export function HomeView() {
 
       {/* BENEFÍCIOS */}
       <section className="mt-4 max-w-4xl">
-        <h2 className="mb-2 text-2xl font-semibold">Por que usar?</h2>
+        <h2 className="font-display mb-2 text-2xl font-semibold tracking-tight">
+          Por que usar?
+        </h2>
 
         <ul className="text-muted-foreground space-y-2">
           {benefits.map((benefit) => (
@@ -185,7 +189,9 @@ export function HomeView() {
 
       {/* GET STARTED */}
       <section className="mt-4 w-full max-w-4xl">
-        <h2 className="mb-2 text-2xl font-semibold">Comece em segundos</h2>
+        <h2 className="font-display mb-2 text-2xl font-semibold tracking-tight">
+          Comece em segundos
+        </h2>
 
         <div className="relative">
           <motion.pre
