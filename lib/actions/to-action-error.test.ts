@@ -2,8 +2,11 @@ import { z } from "zod";
 import { describe, expect, it, vi } from "vitest";
 
 import { ConflictError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 import { toActionError } from "./to-action-error";
+
+vi.mock("@/lib/logger", () => ({ logger: { error: vi.fn() } }));
 
 describe("toActionError", () => {
   it("mapeia ZodError para fieldErrors", () => {
@@ -26,12 +29,13 @@ describe("toActionError", () => {
   });
 
   it("esconde erro desconhecido atrás de mensagem genérica", () => {
-    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     const result = toActionError(new Error("stack interno secreto"));
 
     expect(result).toMatchObject({ ok: false, code: "INTERNAL_ERROR" });
     expect(result.error).not.toContain("secreto");
-    expect(spy).toHaveBeenCalled();
-    spy.mockRestore();
+    expect(logger.error).toHaveBeenCalledWith(
+      "action: erro inesperado",
+      expect.objectContaining({ err: expect.any(Error) }),
+    );
   });
 });

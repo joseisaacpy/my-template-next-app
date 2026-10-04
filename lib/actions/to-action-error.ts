@@ -3,6 +3,7 @@ import "server-only";
 import { ZodError, flattenError } from "zod";
 
 import { AppError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 import type { ActionError } from "./types";
 
@@ -29,7 +30,7 @@ export function toActionError(error: unknown): ActionError {
     return { ok: false, error: error.message, code: error.code };
   }
 
-  console.error("[action] erro inesperado:", error);
+  logger.error("action: erro inesperado", { err: error });
   return {
     ok: false,
     error: "Algo deu errado. Tente novamente.",

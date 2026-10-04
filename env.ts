@@ -21,6 +21,9 @@ const envSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(1, "defina BETTER_AUTH_SECRET"),
   NEXT_PUBLIC_BASE_URL: z.url(),
 
+  // Nível mínimo dos logs (lib/logger.ts). Sem ele: info em produção, debug em dev.
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "silent"]).optional(),
+
   // RBAC — e-mails (separados por vírgula) que viram admin ao criar a conta.
   ADMIN_EMAILS: z.string().optional(),
 
