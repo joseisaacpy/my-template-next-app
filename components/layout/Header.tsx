@@ -69,7 +69,10 @@ export function Header({ user, authenticated, className }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <MobileNav links={links} siteName={site.name} />
+          <MobileNav
+            links={links.map(({ key, path, label }) => ({ key, path, label }))}
+            siteName={site.name}
+          />
 
           {user ? (
             <>

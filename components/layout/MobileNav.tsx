@@ -15,8 +15,14 @@ import type { NavLinkItem } from "@/nav.config";
 
 import { NavLink } from "./NavLink";
 
+/**
+ * Só os campos serializáveis: este componente é client e recebe a prop de um
+ * Server Component, então não pode levar `icon` (um componente React).
+ */
+type MobileNavLink = Pick<NavLinkItem, "key" | "path" | "label">;
+
 interface MobileNavProps {
-  links: NavLinkItem[];
+  links: MobileNavLink[];
   siteName: string;
 }
 
