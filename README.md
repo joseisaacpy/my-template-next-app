@@ -57,6 +57,14 @@ pnpm dev         # http://localhost:3000
 
 Para virar admin, cadastre-se com um e-mail listado em `ADMIN_EMAILS`.
 
+**Sem conta no Neon?** Suba o Postgres e o app com Docker:
+
+```bash
+docker compose up --build   # http://localhost:3000
+```
+
+Veja [`docs/docker.md`](docs/docker.md) (inclui só o banco em container com `pnpm dev`).
+
 ---
 
 ## 📚 Documentação

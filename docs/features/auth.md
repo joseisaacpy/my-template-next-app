@@ -67,7 +67,9 @@ Dois papéis: `user` (padrão) e `admin`, via plugin `admin` do better-auth.
 - **Primeiro admin:** liste o e-mail em `ADMIN_EMAILS` (`.env`) e cadastre-se.
   Só vale na criação da conta (seguro porque o e-mail precisa ser verificado).
   Depois, admins trocam papéis em `/admin/users`.
-- **Proteger page:** `await requireRole("admin")` — sem permissão responde 404.
+- **Proteger page:** `await requireRole("admin")` — sem permissão mostra a página 404
+  (o conteúdo restrito não é enviado; o status HTTP pode vir 200 por causa do
+  streaming com `app/loading.tsx`).
 - **Proteger action:** `createAction({ roles: ["admin"], ... })` — sem permissão
   retorna `{ ok: false, code: "FORBIDDEN" }`.
 - **Menu:** `roles: ["admin"]` na rota em `nav.config.ts` esconde o link; é só

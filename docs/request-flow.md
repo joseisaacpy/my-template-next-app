@@ -11,7 +11,7 @@ flowchart TD
   P -->|sem cookie| LG["redirect para /login"]
   P --> LY["layout (private)<br/>requireSession()"]
   LY --> PG["page.tsx<br/>requireUser() ou requireRole()"]
-  PG -->|sem o papel| NF["404 (notFound)"]
+  PG -->|sem o papel| NF["página 404 (notFound)"]
   PG --> S["service<br/>regras de negócio + userId"]
   S --> RP["repository<br/>única camada com Prisma"]
   RP --> DB[("PostgreSQL")]

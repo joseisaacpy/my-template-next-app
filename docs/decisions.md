@@ -135,3 +135,31 @@ como "Substituída") — não apague o histórico.
 - **Alternativas:** não registradas.
 - **Consequências:** verificação de e-mail e reset de senha funcionam em dev
   copiando o link do terminal.
+
+## 12. Dois drivers de banco, escolhidos por `DATABASE_DRIVER`
+
+- **Status:** aceita
+- **Contexto:** o adapter do Neon fala com o banco por WebSocket e não conecta
+  num Postgres comum, então o template só rodava com conta no Neon.
+- **Decisão:** `lib/db/adapter.ts` cria `PrismaNeon` ou `PrismaPg` conforme
+  `DATABASE_DRIVER` (`neon` por padrão). O compose usa `pg`.
+- **Alternativas:** detectar o driver pelo host da URL (descartada: mágica que
+  confunde); usar só `adapter-pg` (descartada: muda o comportamento em produção
+  de quem já usa o Neon em serverless).
+- **Consequências:** uma env nova e uma dependência a mais. O `prisma/seed.ts`
+  e o app usam a mesma função.
+
+## 13. Imagem standalone com migração em serviço separado
+
+- **Status:** aceita
+- **Contexto:** a imagem de produção deve ser enxuta, e `prisma migrate deploy`
+  precisa do CLI do Prisma, que é dependência de desenvolvimento.
+- **Decisão:** `Dockerfile` multi-stage. O _target_ `migrate` (com todas as
+  dependências) aplica as migrações e sai; o _target_ `runner` só leva o
+  `.next/standalone`. `output: "standalone"` só liga com `NEXT_OUTPUT=standalone`,
+  para não afetar o deploy na Vercel.
+- **Alternativas:** rodar a migração no entrypoint do app (descartada: leva o
+  CLI e dependências de dev na imagem final, e cada réplica tentaria migrar).
+- **Consequências:** `NEXT_PUBLIC_BASE_URL` é embutida no build (mudar a URL
+  exige reconstruir a imagem). A CSP só inclui `upgrade-insecure-requests` quando
+  essa URL é https, porque em `http://localhost` a diretiva quebra o Safari.

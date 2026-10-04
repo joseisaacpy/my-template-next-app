@@ -28,13 +28,16 @@
 - docs de arquitetura: índice, fluxo de request, how-to de feature, testes, ADRs
 - `robots.txt` bloqueia `/admin` inteiro
 
+## Feito (P1)
+
+- Docker: imagem standalone + compose com Postgres (`docs/docker.md`) e driver `pg`
+
 ## P0 — pendente
 
 - testes de integração
 
 ## P1
 
-- Docker (Next.js + PostgreSQL)
 - logger
 - melhorar a DX do clone
 

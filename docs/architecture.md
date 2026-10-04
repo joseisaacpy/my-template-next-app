@@ -28,7 +28,7 @@ features/
 lib/
   actions/             createAction(), toActionError(), ActionResult
   auth/                auth.ts, auth-client.ts, session.ts (DAL), roles.ts, social-providers.ts
-  db/                  cliente Prisma único
+  db/                  cliente Prisma único + adapter.ts (driver neon ou pg)
   email/               sendEmail + transportes + templates React Email
   errors/              AppError e subclasses
   hooks/               use-mounted
@@ -37,6 +37,8 @@ lib/
   generated/prisma/    client gerado (ignorado pelo git)
   metadata.ts          createMetadata()
 prisma/                schema.prisma, migrations/, seed.ts
+public/                arquivos estáticos (vazio no template)
+Dockerfile · docker-compose.yml   imagem standalone + Postgres (docs/docker.md)
 docs/                  esta documentação
 vitest/stubs/          stub de `server-only` para os testes
 nav.config.ts          rotas, navegação e identidade do site
@@ -64,8 +66,10 @@ Fluxos e regras: [features/auth.md](features/auth.md).
 
 ## Database
 
-Prisma 7 (`generator prisma-client`, output em `lib/generated/prisma`, adapter
-Neon). Cliente único em `lib/db/prisma.ts`. Models: `user` / `session` /
+Prisma 7 (`generator prisma-client`, output em `lib/generated/prisma`). Cliente
+único em `lib/db/prisma.ts`; o driver vem de `lib/db/adapter.ts`, escolhido por
+`DATABASE_DRIVER`: `neon` (padrão, Neon) ou `pg` (Postgres comum, usado no
+Docker — ver [docker.md](docker.md)). Models: `user` / `session` /
 `account` / `verification` (better-auth, incluindo os campos do plugin admin:
 `role`, `banned`, `banReason`, `banExpires` em `User` e `impersonatedBy` em
 `Session`) + `RateLimit` + `Note` (exemplo). Migrações versionadas em
