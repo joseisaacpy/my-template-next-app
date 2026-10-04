@@ -31,6 +31,7 @@
 ## Feito (P1)
 
 - Docker: imagem standalone + compose com Postgres (`docs/docker.md`) e driver `pg`
+- Logger: `lib/logger.ts`, `instrumentation.ts` (`onRequestError`) e logger do Better Auth (`docs/logging.md`)
 
 ## P0 — pendente
 
@@ -38,12 +39,11 @@
 
 ## P1
 
-- logger
 - melhorar a DX do clone
 
 ## P2
 
-- observability (provedor real, como Sentry, em `captureError`)
+- observability: provedor real (como Sentry) em `instrumentation.ts` e `captureError`
 
 ## T3 — não bloqueia, quando fizer sentido
 

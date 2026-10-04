@@ -31,6 +31,8 @@ Regras de código do projeto. O **porquê** de cada uma está em
 - DTO na fronteira: o service devolve o DTO, não a linha crua do Prisma
 - Nunca acessar Prisma no client
 - `import "server-only"` em service e repository
+- No servidor, `logger` (`lib/logger.ts`) no lugar de `console` (o ESLint avisa);
+  nunca logue senha, token ou cookie
 - Barrel (`index.ts`) da feature nunca exporta o service
 - Components desacoplados
 - Evitar lógica em `page.tsx`

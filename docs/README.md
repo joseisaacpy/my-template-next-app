@@ -13,8 +13,9 @@ Ponto de partida para quem acabou de clonar o template. Comece pelo
 | 6   | [features/auth.md](features/auth.md)               | vai mexer em login, sessão ou papéis (RBAC)                     |
 | 7   | [testing.md](testing.md)                           | vai escrever ou rodar testes                                    |
 | 8   | [docker.md](docker.md)                             | quer rodar com Postgres em container ou gerar a imagem do app   |
-| 9   | [decisions.md](decisions.md)                       | quer saber **por que** algo foi feito assim antes de mudar      |
-| 10  | [roadmap.md](roadmap.md)                           | quer ver o que já foi feito e o que falta                       |
+| 9   | [logging.md](logging.md)                           | quer logar algo ou entender onde os erros aparecem              |
+| 10  | [decisions.md](decisions.md)                       | quer saber **por que** algo foi feito assim antes de mudar      |
+| 11  | [roadmap.md](roadmap.md)                           | quer ver o que já foi feito e o que falta                       |
 
 ## Em uma frase cada
 

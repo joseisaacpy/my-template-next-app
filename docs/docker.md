@@ -78,7 +78,7 @@ Quem usa Neon não precisa mudar nada.
 ## Comandos úteis
 
 ```bash
-docker compose logs -f app     # logs (e links de e-mail)
+docker compose logs -f app     # logs (e links de e-mail); nível em LOG_LEVEL
 docker compose down            # para tudo, mantém os dados
 docker compose down -v         # para tudo E apaga o banco (volume)
 docker compose build app       # reconstrói só o app

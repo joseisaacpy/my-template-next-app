@@ -32,7 +32,8 @@ lib/
   email/               sendEmail + transportes + templates React Email
   errors/              AppError e subclasses
   hooks/               use-mounted
-  observability/       captureError()
+  logger.ts            logger do servidor (JSON em produção)
+  observability/       captureError() (navegador)
   security/            headers.ts (headers de segurança + CSP)
   generated/prisma/    client gerado (ignorado pelo git)
   metadata.ts          createMetadata()
@@ -41,6 +42,7 @@ public/                arquivos estáticos (vazio no template)
 Dockerfile · docker-compose.yml   imagem standalone + Postgres (docs/docker.md)
 docs/                  esta documentação
 vitest/stubs/          stub de `server-only` para os testes
+instrumentation.ts    onRequestError: loga erros de servidor
 nav.config.ts          rotas, navegação e identidade do site
 proxy.ts               checagem otimista de sessão
 env.ts                 validação das variáveis de ambiente (Zod)
@@ -116,9 +118,15 @@ envia via Resend. Templates React Email em `lib/email/templates/`
 
 ## Observabilidade
 
-`lib/observability/capture-error.ts` — `captureError()` é o ponto único de
-captura de erro, chamado pelos error boundaries (`app/error.tsx`,
-`app/global-error.tsx`). Hoje só loga no console; plugue o provedor ali.
+- `lib/logger.ts` — logger do servidor (JSON em produção, legível em dev),
+  nível por `LOG_LEVEL`. Use no lugar de `console`.
+- `instrumentation.ts` — `onRequestError` registra os erros de servidor (render,
+  route handler, action, proxy) com `digest`, método e caminho.
+- `lib/observability/capture-error.ts` — `captureError()` é a captura de erro
+  **do navegador**, chamada pelos error boundaries (`app/error.tsx`,
+  `app/global-error.tsx`). Só loga no console do navegador; plugue o provedor ali.
+
+Detalhes, formatos e como plugar o Sentry: [logging.md](logging.md).
 
 ## Rotas, Navegação e Metadata
 

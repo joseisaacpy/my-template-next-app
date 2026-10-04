@@ -134,7 +134,8 @@ como "Substituída") — não apague o histórico.
   `RESEND_API_KEY`, o e-mail é impresso no terminal; com a chave, vai pelo Resend.
 - **Alternativas:** não registradas.
 - **Consequências:** verificação de e-mail e reset de senha funcionam em dev
-  copiando o link do terminal.
+  copiando o link do terminal. Esse transporte usa `console` (texto legível), não
+  o `logger` (ver decisão 14).
 
 ## 12. Dois drivers de banco, escolhidos por `DATABASE_DRIVER`
 
@@ -163,3 +164,20 @@ como "Substituída") — não apague o histórico.
 - **Consequências:** `NEXT_PUBLIC_BASE_URL` é embutida no build (mudar a URL
   exige reconstruir a imagem). A CSP só inclui `upgrade-insecure-requests` quando
   essa URL é https, porque em `http://localhost` a diretiva quebra o Safari.
+
+## 14. Logger próprio, sem dependência
+
+- **Status:** aceita
+- **Contexto:** o template só tinha `console.*` espalhado, e erros de servidor
+  fora das server actions não eram registrados em lugar nenhum.
+- **Decisão:** `lib/logger.ts` (~180 linhas com comentários, `server-only`): JSON em produção,
+  linha colorida em dev (`util.styleText`, Node 24), nível por `LOG_LEVEL`,
+  `child()` e redaction de chaves sensíveis. `instrumentation.ts` registra os
+  erros de servidor e o logger do Better Auth passa pelo mesmo logger.
+- **Alternativas:** `pino` (padrão de mercado, mas traz dependência e, para saída
+  legível em dev, um transport em worker thread, que é a parte que costuma dar
+  problema com bundlers).
+- **Consequências:** um arquivo a manter, mas cabe numa leitura e não depende de
+  nada. Quem precisar de recursos avançados (rotação, transports) pode trocar
+  pelo `pino` mantendo a mesma API `logger.info/error`. O `captureError` roda no
+  navegador e continua em `console`; `prisma/seed.ts` também.
