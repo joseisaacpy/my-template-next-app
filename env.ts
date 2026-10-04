@@ -14,6 +14,8 @@ const envSchema = z.object({
   // Banco de dados
   DATABASE_URL: z.url(),
   DIRECT_URL: z.url().optional(),
+  // Driver do Prisma: "neon" (Neon, padrão) ou "pg" (Postgres local/Docker).
+  DATABASE_DRIVER: z.enum(["neon", "pg"]).default("neon"),
 
   // Better Auth
   BETTER_AUTH_SECRET: z.string().min(1, "defina BETTER_AUTH_SECRET"),
