@@ -212,12 +212,16 @@ export function sitemapRoutes(): Array<{
 }
 
 /**
- * Prefixos de caminho que exigem sessão — derivados das rotas `auth: true`.
- * Consumido por `app/robots.ts` para montar as regras `Disallow`.
- * (O `proxy.ts` mantém a própria lista para não inflar o bundle do middleware.)
+ * Prefixos de caminho que exigem sessão — o 1º segmento de cada rota
+ * `auth: true` (`/admin/users` → `/admin`), sem repetir. Consumido por
+ * `app/robots.ts` para montar as regras `Disallow`.
+ * (O `proxy.ts` mantém a própria lista para não inflar o bundle do middleware;
+ * as duas devem listar os mesmos prefixos.)
  */
 export function privatePathPrefixes(): string[] {
-  return (Object.keys(routes) as RouteKey[])
+  const prefixes = (Object.keys(routes) as RouteKey[])
     .filter((key) => routes[key].auth)
-    .map((key) => routes[key].path);
+    .map((key) => `/${routes[key].path.split("/")[1]}`);
+
+  return [...new Set(prefixes)];
 }

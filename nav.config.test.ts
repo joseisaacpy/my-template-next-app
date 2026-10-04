@@ -28,12 +28,12 @@ describe("sitemapRoutes", () => {
 });
 
 describe("privatePathPrefixes", () => {
-  it("lista exatamente as rotas auth: true", () => {
-    const expected = Object.values(routes)
-      .filter((r) => r.auth)
-      .map((r) => r.path)
-      .sort();
-    expect([...privatePathPrefixes()].sort()).toEqual(expected);
+  it("lista o 1º segmento das rotas auth: true, sem repetir", () => {
+    expect([...privatePathPrefixes()].sort()).toEqual([
+      "/admin",
+      "/dashboard",
+      "/notes",
+    ]);
   });
 });
 
