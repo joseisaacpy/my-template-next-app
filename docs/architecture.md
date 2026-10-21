@@ -41,6 +41,8 @@ prisma/                schema.prisma, migrations/, seed.ts
 public/                arquivos estáticos (vazio no template)
 Dockerfile · docker-compose.yml   imagem standalone + Postgres (docs/docker.md)
 scripts/setup.ts       `pnpm bootstrap`: .env, segredo, banco e migrações
+scripts/prune.ts       poda o template por tipo de projeto (full / front / back)
+scripts/variants/      arquivos que substituem os originais em cada modo de poda
 .vscode/ · .npmrc      extensões/format recomendados · engine-strict (Node 24, pnpm 10)
 docs/                  esta documentação
 vitest/stubs/          stub de `server-only` para os testes

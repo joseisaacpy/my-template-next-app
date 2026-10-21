@@ -197,3 +197,23 @@ como "Substituída") — não apague o histórico.
 - **Consequências:** o seed cria uma credencial **conhecida**, então recusa
   `NODE_ENV=production` e banco não local sem `SEED_ALLOW_REMOTE=1`. O segredo
   passou a exigir 32+ caracteres e o `.npmrc` liga `engine-strict`.
+
+## 16. Poda do template por tipo de projeto (full / front / back)
+
+- **Status:** aceita
+- **Contexto:** o template traz interface, auth, banco, e-mail e Docker, mas
+  muitos projetos são só front (sem banco) ou só API (sem telas). Apagar à mão
+  é lento e deixa dependências e arquivos órfãos.
+- **Decisão:** `pnpm bootstrap` chama `scripts/prune.ts` (só `node:*`), que
+  apaga os caminhos do modo escolhido, tira de `package.json` as deps e scripts
+  que sobram, copia por cima os arquivos de `scripts/variants/<modo>/` e roda
+  `pnpm install`, `typecheck`, `lint` e `test`. No modo `back`, as server
+  actions viram route handlers (`createRoute`) reaproveitando services e schemas.
+- **Alternativas:** repositórios/branches separados por tipo (descartada: três
+  bases para manter em sincronia); editar arquivos mistos por regex (descartada:
+  quebra em silêncio, por isso `nav.config.ts`, `Header.tsx` e a home têm
+  overlays prontos).
+- **Consequências:** só roda com a árvore git limpa e ao menos um commit, para
+  `git restore . && git clean -fd` desfazer. Os overlays do `back` ficam fora do
+  `tsconfig` e do Vitest do template completo, porque importam arquivos que só
+  existem depois da poda; os overlays do `front` compilam em ambos.

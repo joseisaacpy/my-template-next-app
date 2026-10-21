@@ -24,6 +24,45 @@ pnpm dev         # http://localhost:3000
 O `pnpm bootstrap` (`scripts/setup.ts`) é seguro de repetir: só preenche o que
 está **em branco** no `.env`, nunca sobrescreve o que você já definiu.
 
+### Escolhendo o tipo de projeto
+
+Na primeira vez, o `pnpm bootstrap` pergunta o que você vai construir e **poda** o
+que não precisa (`scripts/prune.ts`):
+
+| Modo    | Fica                                               | Sai                                                                                    |
+| ------- | -------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `full`  | Tudo: interface, auth, banco, e-mail e Docker      | Nada (só o próprio script de poda)                                                     |
+| `front` | Interface (Tailwind, shadcn, Motion, tema)         | Banco, auth, e-mail, Docker, telas de login e área privada                             |
+| `back`  | API (route handlers), auth, banco, e-mail e Docker | Páginas, componentes, Tailwind, shadcn, server actions e a checagem de cookie do proxy |
+
+Para não ser perguntado: `pnpm bootstrap --mode=back` (acrescente `--yes` para
+pular a confirmação). A poda só roda com a árvore git **limpa e com ao menos um
+commit**; assim `git restore . && git clean -fd` desfaz tudo. Depois dela rodam
+`pnpm install`, `typecheck`, `lint` e `test`.
+
+> Os arquivos de `docs/` e o README continuam descrevendo o template completo:
+> ajuste-os ao seu projeto.
+
+#### API do modo `back`
+
+Sem telas, as server actions de exemplo viram route handlers em `app/api/*`,
+montados com `createRoute` (`lib/api/create-route.ts`): sessão → papéis →
+validação do corpo JSON → handler. Toda resposta segue
+`{ ok: true, data }` ou `{ ok: false, error, code, fieldErrors? }`.
+
+| Rota                                  | O que faz                           |
+| ------------------------------------- | ----------------------------------- |
+| `GET /api/health`                     | Health check público                |
+| `GET`/`POST /api/notes`               | Lista / cria notas do usuário       |
+| `GET`/`PATCH`/`DELETE /api/notes/:id` | Lê / edita / apaga uma nota         |
+| `GET /api/admin/users`                | Lista usuários (admin)              |
+| `PATCH /api/admin/users/:id/role`     | Troca o papel de um usuário (admin) |
+
+Rotas com corpo exigem `Content-Type: application/json` (415 caso contrário).
+O login e o cadastro seguem os endpoints do better-auth em `/api/auth/*`; os
+links dos e-mails de verificação e de redefinição apontam para eles, e quem
+consome a API decide para onde redirecionar (`callbackURL`).
+
 ### Login de demonstração
 
 Depois do `pnpm db:seed`, entre em `/login` com:

@@ -44,7 +44,9 @@ pnpm db:seed     # (opcional) admin demo: admin@example.com / Admin@12345
 pnpm dev         # http://localhost:3000
 ```
 
-O `pnpm bootstrap` é seguro de repetir e não sobrescreve nada que você já
+O `pnpm bootstrap` pergunta se o projeto é **full stack**, **só front** ou **só
+back** e poda o que não precisa (`--mode=full|front|back` para não ser
+perguntado). É seguro de repetir e não sobrescreve nada que você já
 preencheu no `.env`. Quer usar o Neon? Coloque a `DATABASE_URL` no `.env` antes.
 Todo o passo a passo, problemas comuns e o que ajustar depois do clone estão em
 [`docs/getting-started.md`](docs/getting-started.md).
