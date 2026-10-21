@@ -8,7 +8,13 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["**/*.test.ts"],
-    exclude: ["node_modules", ".next", "lib/generated"],
+    exclude: [
+      "node_modules",
+      ".next",
+      "lib/generated",
+      // Roda só depois da poda (importa arquivos que ainda não existem).
+      "scripts/variants/back/**",
+    ],
   },
   resolve: {
     alias: [
