@@ -1,6 +1,8 @@
 /**
  * Setup do primeiro uso: `pnpm bootstrap`.
  *
+ * 0. se o template ainda não foi podado, pergunta o tipo de projeto
+ *    (full / front / back) via `scripts/prune.ts` — pule com `--mode=full`;
  * 1. cria o `.env` a partir do `.env.example` (se não existir);
  * 2. gera o `BETTER_AUTH_SECRET` e aponta o banco para o Postgres do Docker,
  *    mas só onde o valor está **em branco** — nunca sobrescreve o que você já
@@ -52,6 +54,17 @@ function hasCommand(command: string): boolean {
 function fail(message: string): never {
   console.error(`\n✖ ${message}`);
   process.exit(1);
+}
+
+// ── 0. tipo de projeto ───────────────────────────────────────────────────────
+// Repassa os argumentos (`pnpm bootstrap --mode=back --yes`) ao prune. Sem
+// `scripts/prune.ts` o template já foi podado (ou escolheu full) e segue direto.
+if (existsSync("scripts/prune.ts")) {
+  if (!run("node", ["scripts/prune.ts", ...process.argv.slice(2)])) {
+    fail("A poda do template falhou. Veja o erro acima.");
+  }
+  // O modo `front` não tem banco: o prune apaga este script, nada a configurar.
+  if (!existsSync("scripts/setup.ts")) process.exit(0);
 }
 
 // ── 1. .env ───────────────────────────────────────────────────────────────────
