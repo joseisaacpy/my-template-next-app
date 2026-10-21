@@ -4,8 +4,8 @@ import { ThemeButton } from "@/components/theme/ThemeButton";
 import { cn } from "@/lib/utils";
 import { nav, site } from "@/nav.config";
 
-import { MobileNav } from "./MobileNav";
-import { NavLink } from "./NavLink";
+import { MobileNav } from "@/components/layout/MobileNav";
+import { NavLink } from "@/components/layout/NavLink";
 
 interface HeaderProps {
   /** Revela os itens `auth: true` (ex.: quando você ligar um login externo). */
