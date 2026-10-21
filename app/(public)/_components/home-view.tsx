@@ -16,29 +16,14 @@ import { ThemeButton } from "@/components/theme/ThemeButton";
 import { Button } from "@/components/ui/button";
 import { site } from "@/nav.config";
 
+import { benefits, hero, stack } from "./home-content";
+
 const MotionImage = motion.create(Image);
 
 const links = [
   { name: "Ver código no GitHub", href: site.repoUrl },
   { name: "Meu GitHub", href: site.author.url },
   { name: "Meu portfólio", href: site.author.portfolio },
-];
-
-const stack = [
-  { name: "Next.js", href: "https://nextjs.org/docs" },
-  { name: "Prisma", href: "https://www.prisma.io/docs" },
-  { name: "Neon", href: "https://www.neon.tech/docs/" },
-  { name: "Better Auth", href: "https://better-auth.com" },
-  { name: "Tailwind CSS", href: "https://tailwindcss.com/docs" },
-  { name: "Motion", href: "https://motion.dev/docs" },
-  { name: "shadcn/ui", href: "https://ui.shadcn.com/docs" },
-];
-
-const benefits = [
-  "Sem setup inicial chato",
-  "Autenticação pronta",
-  "Banco já configurado",
-  "Estrutura escalável",
 ];
 
 const command = `npx create-next-app -e ${site.repoUrl}
@@ -118,12 +103,11 @@ export function HomeView() {
           className="font-display text-4xl font-extrabold tracking-tight sm:text-6xl"
           onClick={teste}
         >
-          Next.js Fullstack Starter
+          {hero.title}
         </motion.h1>
 
         <motion.p variants={fadeIn} className="text-muted-foreground text-lg">
-          Template completo com autenticação, banco de dados e UI prontos.
-          Comece projetos em minutos, não horas.
+          {hero.description}
         </motion.p>
 
         <div className="mt-4 flex flex-wrap justify-center gap-4">
